@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-ivory text-[#333333] overflow-x-hidden;
+  }
+
+  ::selection {
+    @apply bg-gold-light text-[#333];
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-ivory;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gold-light rounded-lg;
+  }
+}

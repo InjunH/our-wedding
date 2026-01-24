@@ -13,7 +13,7 @@ const CoreTruth: React.FC = () => {
             viewport={{ once: true, margin: "-10%" }}
             className="flex justify-center mb-8"
           >
-            <div className="w-12 h-12 border border-[#e5d5b7] rounded-full flex items-center justify-center text-[#c5a059] serif italic text-xl">
+            <div className="w-12 h-12 border border-gold-light rounded-full flex items-center justify-center text-gold serif italic text-xl">
               &
             </div>
           </motion.div>
@@ -26,7 +26,7 @@ const CoreTruth: React.FC = () => {
             className="text-4xl md:text-6xl font-medium leading-tight serif tracking-tight"
           >
             2,190일의 기록,<br />
-            <span className="italic text-[#c5a059] font-light">우리의 계절이 꽃피는 날</span>
+            <span className="italic text-gold font-light">우리의 계절이 꽃피는 날</span>
           </motion.h2>
           
           <motion.div 
@@ -38,7 +38,7 @@ const CoreTruth: React.FC = () => {
           >
             <p>서로 다른 두 세계가 만나 하나의 역사가 되기까지.</p>
             <p>우리가 함께 걸어온 6년의 시간은 단순한 숫자가 아닌,<br />서로를 향한 깊은 신뢰와 사랑의 증명이었습니다.</p>
-            <p className="pt-10 serif italic text-[#c5a059] text-2xl">
+            <p className="pt-10 serif italic text-gold text-2xl">
               이제 그 찬란한 시작의 순간에<br />소중한 당신을 초대합니다.
             </p>
           </motion.div>

@@ -12,7 +12,7 @@ const CountUp: React.FC<{ value: number }> = ({ value }) => {
     return animation.stop;
   }, [value]);
 
-  return <motion.span className="font-light serif italic text-[14vw] leading-none tracking-tight text-[#c5a059]">{rounded}</motion.span>;
+  return <motion.span className="font-light serif italic text-[14vw] leading-none tracking-tight text-gold">{rounded}</motion.span>;
 };
 
 const Hero: React.FC = () => {
@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden bg-[#faf9f6]">
+    <section className="h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden bg-ivory">
       <motion.div 
         initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 0.15, scale: 1 }}
@@ -38,11 +38,11 @@ const Hero: React.FC = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <span className="text-[10px] font-bold tracking-[0.5em] text-[#c5a059] uppercase mb-4 block">Save the Date</span>
+          <span className="text-[10px] font-bold tracking-[0.5em] text-gold uppercase mb-4 block">Save the Date</span>
           <h1 className="text-5xl md:text-8xl font-medium tracking-tight mb-2 serif italic text-[#333]">
             Nuri <span className="font-light serif text-stone-300">&</span> Injun
           </h1>
-          <div className="h-px w-24 bg-[#c5a059] mx-auto mt-6 opacity-50"></div>
+          <div className="h-px w-24 bg-gold mx-auto mt-6 opacity-50"></div>
         </motion.div>
         
         <div className="flex flex-col items-center">
@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5 }}
       >
-        <div className="w-px h-16 bg-gradient-to-b from-[#c5a059] to-transparent"></div>
+        <div className="w-px h-16 bg-gradient-to-b from-gold to-transparent"></div>
         <span className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase">Scroll Down</span>
       </motion.div>
     </section>

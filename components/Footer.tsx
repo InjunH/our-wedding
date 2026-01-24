@@ -3,12 +3,12 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="py-32 px-6 bg-[#faf9f6] text-center">
+    <footer className="py-32 px-6 bg-ivory text-center">
       <div className="max-w-2xl mx-auto space-y-16">
         <div className="space-y-4">
-          <span className="text-[10px] font-bold text-[#c5a059] tracking-[0.6em] uppercase">Closing</span>
+          <span className="text-[10px] font-bold text-gold tracking-[0.6em] uppercase">Closing</span>
           <h3 className="text-4xl font-medium serif italic tracking-tight text-[#333]">
-            With All Our <span className="text-[#c5a059]">Love</span>.
+            With All Our <span className="text-gold">Love</span>.
           </h3>
         </div>
         

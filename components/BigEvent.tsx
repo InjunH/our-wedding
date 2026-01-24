@@ -33,9 +33,9 @@ const BigEvent: React.FC = () => {
              className="text-5xl md:text-7xl font-medium serif tracking-tight mb-4"
           >
             Invitation <br />
-            <span className="italic text-[#c5a059] font-light">to our Big Day</span>
+            <span className="italic text-gold font-light">to our Big Day</span>
           </motion.h2>
-          <div className="h-px w-24 bg-[#c5a059] mx-auto mt-8"></div>
+          <div className="h-px w-24 bg-gold mx-auto mt-8"></div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-stretch">
@@ -52,7 +52,7 @@ const BigEvent: React.FC = () => {
                 { label: 'Secs', value: timeLeft.secs },
               ].map(unit => (
                 <div key={unit.label} className="text-center py-4 border-b border-[#f0ede6]">
-                  <span className="text-3xl font-light block mb-1 serif text-[#c5a059]">{unit.value}</span>
+                  <span className="text-3xl font-light block mb-1 serif text-gold">{unit.value}</span>
                   <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{unit.label}</span>
                 </div>
               ))}
@@ -66,22 +66,22 @@ const BigEvent: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="bg-[#faf9f6] p-10 md:p-16 border border-[#f0ede6] relative"
+            className="bg-ivory p-10 md:p-16 border border-[#f0ede6] relative"
           >
             <div className="space-y-12">
               <div className="flex items-start gap-6">
-                <Calendar className="text-[#c5a059] shrink-0 mt-1" size={24} />
+                <Calendar className="text-gold shrink-0 mt-1" size={24} />
                 <div>
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-3 text-stone-400">Date</h4>
                   <p className="text-2xl serif italic font-medium">Sunday, May 24, 2026</p>
                   <p className="text-stone-500 mt-1 flex items-center gap-2">
-                    <Clock size={16} className="text-[#c5a059]" /> 12:00 PM
+                    <Clock size={16} className="text-gold" /> 12:00 PM
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-6">
-                <MapPin className="text-[#c5a059] shrink-0 mt-1" size={24} />
+                <MapPin className="text-gold shrink-0 mt-1" size={24} />
                 <div>
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-3 text-stone-400">Venue</h4>
                   <p className="text-2xl serif italic font-medium">{WEDDING_DATA.venue}</p>
@@ -91,7 +91,7 @@ const BigEvent: React.FC = () => {
 
               <div className="pt-8">
                 <button 
-                  className="w-full py-5 bg-[#333] text-white font-bold text-[10px] uppercase tracking-[0.4em] flex items-center justify-center gap-3 group hover:bg-[#c5a059] transition-colors duration-500"
+                  className="w-full py-5 bg-[#333] text-white font-bold text-[10px] uppercase tracking-[0.4em] flex items-center justify-center gap-3 group hover:bg-gold transition-colors duration-500"
                   onClick={() => alert('Map link would open')}
                 >
                   View Map & Directions <ArrowUpRight size={14} className="group-hover:translate-x-1 transition-transform" />
