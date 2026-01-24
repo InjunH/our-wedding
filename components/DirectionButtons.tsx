@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Navigation, Map } from 'lucide-react';
+import { Navigation } from 'lucide-react';
 
 interface DirectionButtonsProps {
   lat: number;
@@ -9,8 +9,26 @@ interface DirectionButtonsProps {
   name: string;
 }
 
+const KakaoLogo = () => (
+  <img src="/kakaomap_basic.png" alt="카카오맵" className="w-full h-full object-cover rounded-full" />
+);
+
+const NaverLogo = () => (
+  <img src="/naver.png" alt="네이버지도" className="w-full h-full object-cover rounded-lg" />
+);
+
+const TMapLogo = () => (
+  <img src="/tmap.jpeg" alt="티맵" className="w-full h-full object-cover rounded-lg" />
+);
+
 const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng, name }) => {
+  const [isMobile, setIsMobile] = useState(false);
   const encodedName = encodeURIComponent(name);
+
+  useEffect(() => {
+    const checkMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(checkMobile());
+  }, []);
 
   const openKakaoMap = () => {
     window.open(`https://map.kakao.com/link/to/${encodedName},${lat},${lng}`, '_blank');
@@ -18,22 +36,22 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng, name }) =
 
   const openNaverMap = () => {
     window.open(
-      `https://map.naver.com/v5/directions/-/-/-/car?c=${lng},${lat},15,0,0,0,dh&destination=${encodedName},${lng},${lat}`,
+      `https://map.naver.com/p/directions/-/${lat},${lng},${encodedName}/-/car`,
       '_blank'
     );
   };
 
   const openTMap = () => {
     window.open(
-      `https://apis.openapi.sk.com/tmap/app/routes?appKey=&goalname=${encodedName}&goalx=${lng}&goaly=${lat}`,
+      `https://tmap.life/${lat},${lng}`,
       '_blank'
     );
   };
 
   const buttons = [
-    { label: '카카오맵', onClick: openKakaoMap, color: 'bg-[#FEE500]', textColor: 'text-[#3C1E1E]' },
-    { label: '네이버지도', onClick: openNaverMap, color: 'bg-[#03C75A]', textColor: 'text-white' },
-    { label: '티맵', onClick: openTMap, color: 'bg-[#1C6DD0]', textColor: 'text-white' },
+    { label: '카카오맵', onClick: openKakaoMap, color: 'bg-[#FEE500]', textColor: 'text-[#3C1E1E]', logo: <KakaoLogo /> },
+    { label: '네이버지도', onClick: openNaverMap, color: 'bg-[#03C75A]', textColor: 'text-white', logo: <NaverLogo /> },
+    ...(isMobile ? [{ label: '티맵', onClick: openTMap, color: 'bg-[#1C6DD0]', textColor: 'text-white', logo: <TMapLogo /> }] : []),
   ];
 
   return (
@@ -44,18 +62,20 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng, name }) =
           Navigation
         </h4>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="flex gap-6">
         {buttons.map((btn) => (
-          <motion.button
-            key={btn.label}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={btn.onClick}
-            className={`${btn.color} ${btn.textColor} py-3 px-4 text-xs font-bold rounded-sm transition-all duration-300 flex items-center justify-center gap-2 serif-kr`}
-          >
-            <Map size={14} />
-            {btn.label}
-          </motion.button>
+          <div key={btn.label} className="flex flex-col items-center gap-2">
+            <motion.button
+              whileHover={{ scale: 1.08, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={btn.onClick}
+              aria-label={btn.label}
+              className={`${btn.color} ${btn.textColor} w-12 h-12 rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center`}
+            >
+              {btn.logo}
+            </motion.button>
+            <span className="text-[10px] text-stone-400 font-medium tracking-wide">{btn.label}</span>
+          </div>
         ))}
       </div>
     </div>
