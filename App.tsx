@@ -5,6 +5,9 @@ import Hero from './components/Hero';
 import CoreTruth from './components/CoreTruth';
 import Timeline from './components/Timeline';
 import BigEvent from './components/BigEvent';
+import MapSection from './components/MapSection';
+import RSVP from './components/RSVP';
+import GuestBook from './components/GuestBook';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -29,6 +32,9 @@ const App: React.FC = () => {
         <CoreTruth />
         <Timeline />
         <BigEvent />
+        <MapSection />
+        <RSVP />
+        <GuestBook />
         <Footer />
       </main>
 
@@ -39,7 +45,7 @@ const App: React.FC = () => {
           whileTap={{ scale: 0.95 }}
           className="bg-[#333] text-white px-12 py-4 rounded-none text-[10px] font-bold tracking-[0.5em] uppercase shadow-2xl transition-all duration-500 flex items-center gap-2"
           onClick={() => {
-            const el = document.getElementById('big-event');
+            const el = document.getElementById('rsvp');
             el?.scrollIntoView({ behavior: 'smooth' });
           }}
         >

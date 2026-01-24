@@ -90,9 +90,12 @@ const BigEvent: React.FC = () => {
               </div>
 
               <div className="pt-8">
-                <button 
+                <button
                   className="w-full py-5 bg-[#333] text-white font-bold text-[10px] uppercase tracking-[0.4em] flex items-center justify-center gap-3 group hover:bg-gold transition-colors duration-500"
-                  onClick={() => alert('Map link would open')}
+                  onClick={() => {
+                    const el = document.getElementById('map-section');
+                    el?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                 >
                   View Map & Directions <ArrowUpRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </button>

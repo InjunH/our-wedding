@@ -1,5 +1,5 @@
 
-import { TimelineItem, WeddingData } from './types';
+import { TimelineItem, WeddingData, VenueLocation } from './types';
 
 export const WEDDING_DATA: WeddingData = {
   groom: "Injun",
@@ -8,6 +8,13 @@ export const WEDDING_DATA: WeddingData = {
   firstMetDate: new Date('2020-05-24T18:00:00'), // 2,190 days roughly
   venue: "The Grand Ballroom, Seoul Hotel",
   venueAddress: "Seoul, Republic of Korea",
+};
+
+export const VENUE_LOCATION: VenueLocation = {
+  lat: 37.5665,
+  lng: 126.9780,
+  name: "The Grand Ballroom, Seoul Hotel",
+  address: "서울시 중구 세종대로 99",
 };
 
 export const TIMELINE: TimelineItem[] = [
