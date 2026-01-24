@@ -5,15 +5,12 @@ import { TIMELINE } from '../constants';
 
 const Timeline: React.FC = () => {
   const targetRef = useRef<HTMLDivElement>(null);
-  
-  // Track scroll progress specifically when the container is in view from top to bottom
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"]
   });
 
-  // Calculate horizontal shift based on the number of panels
-  // Introduction + TIMELINE cards + Outro = total panels
   const totalPanels = TIMELINE.length + 2;
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${(1 - 1/totalPanels) * 100}%`]);
 

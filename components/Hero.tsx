@@ -25,13 +25,13 @@ const Hero: React.FC = () => {
 
   return (
     <section className="h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden bg-ivory">
-      <motion.div 
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: 0.15, scale: 1 }}
-        transition={{ duration: 2 }}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.12 }}
+        transition={{ duration: 2.5 }}
         className="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center"
       />
-      
+
       <div className="z-10 text-center space-y-12">
         <motion.div
           initial={{ y: 30, opacity: 0 }}
