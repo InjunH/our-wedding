@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Clock, ArrowUpRight } from 'lucide-react';
 import { WEDDING_DATA } from '../constants';
+import AddToCalendar from './AddToCalendar';
 
 const BigEvent: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
@@ -91,7 +92,8 @@ const BigEvent: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-10">
+              <div className="pt-10 space-y-6">
+                <AddToCalendar />
                 <button
                   className="w-full py-6 bg-[#2a2a2a] text-white font-bold text-[10px] uppercase tracking-[0.6em] flex items-center justify-center gap-4 group hover:bg-gold transition-all duration-700"
                   onClick={() => {
