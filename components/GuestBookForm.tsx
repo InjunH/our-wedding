@@ -32,12 +32,12 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       onSubmit={handleSubmit}
-      className="bg-[#faf9f6] p-6 md:p-8 border border-[#f0ede6] space-y-4"
+      className="bg-white p-6 md:p-8 border border-stone-100 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.04)] space-y-5"
     >
-      <h3 className="text-lg serif font-medium mb-4">축하 메시지 남기기</h3>
+      <h3 className="text-2xl font-handwriting mb-6 pb-4 border-b border-gold/20">축하 메시지 남기기</h3>
 
       <div className="space-y-2">
-        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+        <label className="label-wedding">
           <User size={12} /> 이름
         </label>
         <input
@@ -46,18 +46,18 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
           onChange={(e) => setName(e.target.value)}
           required
           placeholder="이름을 입력해주세요"
-          className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+          className="input-wedding"
         />
       </div>
 
       <div className="space-y-2">
-        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+        <label className="label-wedding">
           <Heart size={12} /> 신랑/신부측
         </label>
         <select
           value={side}
           onChange={(e) => setSide(e.target.value as 'groom' | 'bride' | 'both')}
-          className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+          className="input-wedding"
         >
           <option value="groom">신랑측</option>
           <option value="bride">신부측</option>
@@ -66,7 +66,7 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
       </div>
 
       <div className="space-y-2">
-        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+        <label className="label-wedding">
           <MessageSquare size={12} /> 메시지
         </label>
         <textarea
@@ -75,7 +75,7 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
           required
           rows={4}
           placeholder="축하의 말씀을 남겨주세요"
-          className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm resize-none"
+          className="input-wedding resize-none"
         />
       </div>
 
@@ -84,7 +84,7 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
         disabled={submitting || !name.trim() || !message.trim()}
         whileHover={{ scale: submitting ? 1 : 1.02 }}
         whileTap={{ scale: submitting ? 1 : 0.98 }}
-        className="w-full py-4 bg-[#333] text-white font-bold text-[10px] uppercase tracking-[0.4em] flex items-center justify-center gap-3 hover:bg-[#c5a059] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full btn-gold flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {submitting ? (
           <>

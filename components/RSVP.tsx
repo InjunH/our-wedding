@@ -44,7 +44,7 @@ const RSVP: React.FC = () => {
             <div className="w-20 h-20 bg-[#c5a059] rounded-full flex items-center justify-center mx-auto mb-8">
               <Check className="text-white" size={40} />
             </div>
-            <h3 className="text-3xl serif font-medium mb-4">감사합니다!</h3>
+            <h3 className="text-4xl font-handwriting mb-4">감사합니다!</h3>
             <p className="text-stone-500 mb-8">
               참석 여부가 성공적으로 제출되었습니다.
               <br />
@@ -71,7 +71,7 @@ const RSVP: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-medium serif tracking-tight mb-4">
+          <h2 className="text-5xl md:text-6xl font-handwriting mb-4">
             참석 여부
           </h2>
           <p className="text-stone-400 font-light">
@@ -85,11 +85,11 @@ const RSVP: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           onSubmit={handleSubmit}
-          className="bg-[#faf9f6] p-8 md:p-12 border border-[#f0ede6]"
+          className="bg-white p-8 md:p-12 border border-stone-100 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+              <label className="label-wedding">
                 <User size={14} /> 성함
               </label>
               <input
@@ -99,12 +99,12 @@ const RSVP: React.FC = () => {
                 onChange={handleChange}
                 required
                 placeholder="홍길동"
-                className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+                className="input-wedding"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+              <label className="label-wedding">
                 <Phone size={14} /> 연락처
               </label>
               <input
@@ -114,19 +114,19 @@ const RSVP: React.FC = () => {
                 onChange={handleChange}
                 required
                 placeholder="010-1234-5678"
-                className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+                className="input-wedding"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+              <label className="label-wedding">
                 <Heart size={14} /> 참석 여부
               </label>
               <select
                 name="attendance"
                 value={formData.attendance}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+                className="input-wedding"
               >
                 <option value="attending">참석</option>
                 <option value="not-attending">불참</option>
@@ -135,7 +135,7 @@ const RSVP: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+              <label className="label-wedding">
                 <Users size={14} /> 동반 인원
               </label>
               <input
@@ -145,19 +145,19 @@ const RSVP: React.FC = () => {
                 onChange={handleChange}
                 min="1"
                 max="10"
-                className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+                className="input-wedding"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+              <label className="label-wedding">
                 <Utensils size={14} /> 식사 선택
               </label>
               <select
                 name="mealPreference"
                 value={formData.mealPreference}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+                className="input-wedding"
               >
                 <option value="regular">일반식</option>
                 <option value="vegetarian">채식</option>
@@ -165,14 +165,14 @@ const RSVP: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+              <label className="label-wedding">
                 <Heart size={14} /> 신랑/신부측
               </label>
               <select
                 name="side"
                 value={formData.side}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm"
+                className="input-wedding"
               >
                 <option value="groom">신랑측</option>
                 <option value="bride">신부측</option>
@@ -181,7 +181,7 @@ const RSVP: React.FC = () => {
           </div>
 
           <div className="mt-6 space-y-2">
-            <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+            <label className="label-wedding">
               <MessageSquare size={14} /> 축하 메시지 (선택)
             </label>
             <textarea
@@ -190,7 +190,7 @@ const RSVP: React.FC = () => {
               onChange={handleChange}
               rows={3}
               placeholder="축하의 말씀을 남겨주세요"
-              className="w-full px-4 py-3 bg-white border border-[#f0ede6] focus:border-[#c5a059] outline-none transition-colors text-sm resize-none"
+              className="input-wedding resize-none"
             />
           </div>
 
@@ -213,7 +213,7 @@ const RSVP: React.FC = () => {
             disabled={status === 'submitting'}
             whileHover={{ scale: status === 'submitting' ? 1 : 1.02 }}
             whileTap={{ scale: status === 'submitting' ? 1 : 0.98 }}
-            className="mt-8 w-full py-5 bg-[#333] text-white font-bold text-[10px] uppercase tracking-[0.4em] flex items-center justify-center gap-3 hover:bg-[#c5a059] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-8 w-full btn-gold flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === 'submitting' ? (
               <>

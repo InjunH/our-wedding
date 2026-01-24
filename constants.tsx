@@ -6,15 +6,15 @@ export const WEDDING_DATA: WeddingData = {
   bride: "Nuri",
   weddingDate: new Date('2026-05-24T12:00:00'),
   firstMetDate: new Date('2020-05-24T18:00:00'), // 2,190 days roughly
-  venue: "The Grand Ballroom, Seoul Hotel",
-  venueAddress: "Seoul, Republic of Korea",
+  venue: "서울대학교 호암교수회관",
+  venueAddress: "서울특별시 관악구 관악로 1",
 };
 
 export const VENUE_LOCATION: VenueLocation = {
-  lat: 37.5665,
-  lng: 126.9780,
-  name: "The Grand Ballroom, Seoul Hotel",
-  address: "서울시 중구 세종대로 99",
+  lat: 37.46764,
+  lng: 126.96014,
+  name: "서울대학교 호암교수회관",
+  address: "서울특별시 관악구 관악로 1",
 };
 
 export const TIMELINE: TimelineItem[] = [

@@ -9,8 +9,9 @@ export default {
         "gold-light": "#e5d5b7",
       },
       fontFamily: {
-        serif: ["Playfair Display", "serif"],
-        sans: ["Inter", "Noto Sans KR", "sans-serif"],
+        handwriting: ["Nanum Pen Script", "cursive"],
+        serif: ["Gowun Batang", "serif"],
+        sans: ["IBM Plex Sans KR", "sans-serif"],
       },
     },
   },

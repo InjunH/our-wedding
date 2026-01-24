@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .input-wedding {
+    @apply w-full px-4 py-3 bg-white border border-stone-200 rounded-md
+           focus:border-gold focus:ring-2 focus:ring-gold/20
+           outline-none transition-all text-sm shadow-sm;
+  }
+
+  .label-wedding {
+    @apply flex items-center gap-2 text-sm text-stone-500 mb-2;
+  }
+
+  .btn-gold {
+    @apply py-4 px-6 bg-gradient-to-r from-gold to-[#d4b06a] text-white
+           font-medium rounded-md hover:shadow-lg hover:shadow-gold/30
+           transition-all duration-300;
+  }
+}
+
 @layer base {
   body {
     @apply font-sans bg-ivory text-[#333333] overflow-x-hidden;

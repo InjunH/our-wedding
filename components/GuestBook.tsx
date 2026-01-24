@@ -18,7 +18,7 @@ const GuestBook: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-medium serif tracking-tight mb-4">
+          <h2 className="text-5xl md:text-6xl font-handwriting mb-4">
             방명록
           </h2>
           <p className="text-stone-400 font-light">
