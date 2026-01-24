@@ -15,7 +15,8 @@ export interface WeddingData {
   bridePhone: string;
   weddingDate: Date;
   firstMetDate: Date;
-  venue: string;
+  venue1: string;
+  venue2: string;
   venueAddress: string;
 }
 

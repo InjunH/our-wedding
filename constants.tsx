@@ -10,7 +10,8 @@ export const WEDDING_DATA: WeddingData = {
   bridePhone: "010-6406-7539",
   weddingDate: new Date('2026-05-24T12:00:00'),
   firstMetDate: new Date('2020-05-24T18:00:00'), // 2,190 days roughly
-  venue: "서울대학교 호암교수회관",
+  venue1: "서울대학교",
+  venue2: "호암교수회관",
   venueAddress: "서울특별시 관악구 관악로 1",
 };
 

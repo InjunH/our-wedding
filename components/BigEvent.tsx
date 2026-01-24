@@ -85,7 +85,8 @@ const BigEvent: React.FC = () => {
                 <MapPin className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">Venue Location</h4>
-                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue}</p>
+                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue1}</p>
+                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue2}</p>
                   <p className="text-stone-400 mt-3 font-normal serif-kr text-lg leading-relaxed">{WEDDING_DATA.venueAddress}</p>
                 </div>
               </div>
