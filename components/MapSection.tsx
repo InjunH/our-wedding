@@ -95,7 +95,7 @@ const MapSection: React.FC = () => {
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-3 text-stone-300">
                     Contact
                   </h4>
-                  <p className="text-stone-400 serif-kr text-lg">02-1234-5678</p>
+                  <p className="text-stone-400 serif-kr text-lg">1688-7745</p>
                 </div>
               </div>
             </div>
