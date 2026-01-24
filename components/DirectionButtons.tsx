@@ -38,10 +38,10 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng, name }) =
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2 mb-6">
-        <Navigation size={18} className="text-[#c5a059]" />
-        <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-stone-400">
-          길안내
+      <div className="flex items-center gap-3 mb-6">
+        <Navigation size={18} className="text-gold opacity-60" strokeWidth={1} />
+        <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] text-stone-300">
+          Navigation
         </h4>
       </div>
       <div className="grid grid-cols-3 gap-3">
@@ -51,7 +51,7 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng, name }) =
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={btn.onClick}
-            className={`${btn.color} ${btn.textColor} py-3 px-4 text-xs font-bold rounded-sm transition-all duration-300 flex items-center justify-center gap-2`}
+            className={`${btn.color} ${btn.textColor} py-3 px-4 text-xs font-bold rounded-sm transition-all duration-300 flex items-center justify-center gap-2 serif-kr`}
           >
             <Map size={14} />
             {btn.label}

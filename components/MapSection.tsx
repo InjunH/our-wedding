@@ -20,18 +20,19 @@ const MapSection: React.FC = () => {
   };
 
   return (
-    <section id="map-section" className="py-32 px-6 md:px-20 bg-[#faf9f6]">
+    <section id="map-section" className="py-48 px-6 md:px-20 bg-[#faf9f6]">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-medium serif tracking-tight mb-4">
+          <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">Location</span>
+          <h2 className="text-4xl md:text-5xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             오시는 길
           </h2>
-          <div className="h-px w-24 bg-[#c5a059] mx-auto"></div>
+          <div className="h-px w-20 bg-gold mx-auto opacity-50"></div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -39,7 +40,7 @@ const MapSection: React.FC = () => {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="overflow-hidden border border-[#f0ede6]"
+            className="overflow-hidden border border-[#f2f0ea]"
           >
             <KakaoMap
               lat={VENUE_LOCATION.lat}
@@ -54,17 +55,17 @@ const MapSection: React.FC = () => {
             viewport={{ once: true }}
             className="flex flex-col justify-between space-y-8"
           >
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <MapPin className="text-[#c5a059] shrink-0 mt-1" size={20} />
+            <div className="space-y-8">
+              <div className="flex items-start gap-5">
+                <MapPin className="text-gold shrink-0 mt-1 opacity-60" size={20} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-2 text-stone-400">
-                    주소
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-3 text-stone-300">
+                    Address
                   </h4>
-                  <p className="text-xl serif font-medium mb-1">
+                  <p className="text-2xl serif-kr font-normal mb-2 text-[#2a2a2a]">
                     {VENUE_LOCATION.name}
                   </p>
-                  <p className="text-stone-500 font-light">
+                  <p className="text-stone-400 serif-kr text-lg">
                     {VENUE_LOCATION.address}
                   </p>
                   <motion.button
@@ -88,13 +89,13 @@ const MapSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <Phone className="text-[#c5a059] shrink-0 mt-1" size={20} />
+              <div className="flex items-start gap-5">
+                <Phone className="text-gold shrink-0 mt-1 opacity-60" size={20} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-2 text-stone-400">
-                    문의
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-3 text-stone-300">
+                    Contact
                   </h4>
-                  <p className="text-stone-500 font-light">02-1234-5678</p>
+                  <p className="text-stone-400 serif-kr text-lg">02-1234-5678</p>
                 </div>
               </div>
             </div>

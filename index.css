@@ -4,29 +4,47 @@
 
 @layer components {
   .input-wedding {
-    @apply w-full px-4 py-3 bg-white border border-stone-200 rounded-md
+    @apply w-full px-4 py-3.5 bg-white border border-[#f2f0ea] rounded-sm
            focus:border-gold focus:ring-2 focus:ring-gold/20
-           outline-none transition-all text-sm shadow-sm;
+           outline-none transition-all text-sm;
   }
 
   .label-wedding {
-    @apply flex items-center gap-2 text-sm text-stone-500 mb-2;
+    @apply flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5em] text-stone-300 mb-4;
   }
 
   .btn-gold {
-    @apply py-4 px-6 bg-gradient-to-r from-gold to-[#d4b06a] text-white
-           font-medium rounded-md hover:shadow-lg hover:shadow-gold/30
-           transition-all duration-300;
+    @apply py-5 px-6 bg-[#2a2a2a] text-white
+           font-bold text-[10px] uppercase tracking-[0.5em]
+           hover:bg-gold transition-all duration-500;
+  }
+
+  .serif-kr {
+    font-family: 'Gowun Batang', serif;
+    word-break: keep-all;
+  }
+
+  .serif-en {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .tracking-tight-serif {
+    letter-spacing: -0.02em;
   }
 }
 
 @layer base {
   body {
-    @apply font-sans bg-ivory text-[#333333] overflow-x-hidden;
+    @apply font-sans bg-ivory text-[#2a2a2a] overflow-x-hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    @apply bg-gold-light text-[#333];
+    @apply bg-gold-light text-[#2a2a2a];
+  }
+
+  h1, h2, h3, h4 {
+    word-break: keep-all;
   }
 
   ::-webkit-scrollbar {

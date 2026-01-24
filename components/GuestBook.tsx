@@ -10,21 +10,22 @@ const GuestBook: React.FC = () => {
   const { entries, loading, error, submitting, addEntry } = useGuestBook();
 
   return (
-    <section className="py-32 px-6 md:px-20 bg-[#faf9f6]">
+    <section className="py-48 px-6 md:px-20 bg-[#faf9f6]">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-handwriting mb-4">
+          <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">Guestbook</span>
+          <h2 className="text-5xl md:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             방명록
           </h2>
-          <p className="text-stone-400 font-light">
+          <p className="text-stone-400 serif-kr text-lg">
             소중한 축하의 말씀을 남겨주세요
           </p>
-          <div className="h-px w-24 bg-[#c5a059] mx-auto mt-8"></div>
+          <div className="h-px w-20 bg-gold mx-auto mt-10 opacity-50"></div>
         </motion.div>
 
         <AnimatePresence>

@@ -11,7 +11,12 @@ export default {
       fontFamily: {
         handwriting: ["Nanum Pen Script", "cursive"],
         serif: ["Gowun Batang", "serif"],
+        "serif-kr": ["Gowun Batang", "serif"],
+        "serif-en": ["Cormorant Garamond", "serif"],
         sans: ["IBM Plex Sans KR", "sans-serif"],
+      },
+      letterSpacing: {
+        "tight-serif": "-0.02em",
       },
     },
   },

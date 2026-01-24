@@ -32,9 +32,9 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       onSubmit={handleSubmit}
-      className="bg-white p-6 md:p-8 border border-stone-100 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.04)] space-y-5"
+      className="bg-white p-8 md:p-12 border border-[#f2f0ea] space-y-6"
     >
-      <h3 className="text-2xl font-handwriting mb-6 pb-4 border-b border-gold/20">축하 메시지 남기기</h3>
+      <h3 className="text-xl serif-kr font-normal mb-8 pb-6 border-b border-[#f2f0ea] text-[#2a2a2a]">축하 메시지 남기기</h3>
 
       <div className="space-y-2">
         <label className="label-wedding">

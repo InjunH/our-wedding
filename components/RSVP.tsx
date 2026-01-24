@@ -34,25 +34,25 @@ const RSVP: React.FC = () => {
 
   if (status === 'success') {
     return (
-      <section id="rsvp" className="py-32 px-6 md:px-20 bg-white">
+      <section id="rsvp" className="py-48 px-6 md:px-20 bg-white">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="py-16"
+            className="py-20"
           >
-            <div className="w-20 h-20 bg-[#c5a059] rounded-full flex items-center justify-center mx-auto mb-8">
-              <Check className="text-white" size={40} />
+            <div className="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-10">
+              <Check className="text-white" size={40} strokeWidth={1.5} />
             </div>
-            <h3 className="text-4xl font-handwriting mb-4">감사합니다!</h3>
-            <p className="text-stone-500 mb-8">
+            <h3 className="text-4xl serif-kr font-normal mb-6 text-[#2a2a2a]">감사합니다!</h3>
+            <p className="text-stone-400 mb-10 serif-kr text-lg leading-relaxed">
               참석 여부가 성공적으로 제출되었습니다.
               <br />
               소중한 날에 함께해 주셔서 감사합니다.
             </p>
             <button
               onClick={reset}
-              className="text-[#c5a059] text-sm underline underline-offset-4 hover:text-[#a88a47] transition-colors"
+              className="text-gold text-xs uppercase tracking-[0.3em] underline underline-offset-4 hover:text-[#a88a47] transition-colors"
             >
               다시 제출하기
             </button>
@@ -63,21 +63,22 @@ const RSVP: React.FC = () => {
   }
 
   return (
-    <section id="rsvp" className="py-32 px-6 md:px-20 bg-white">
+    <section id="rsvp" className="py-48 px-6 md:px-20 bg-white">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-handwriting mb-4">
+          <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">RSVP</span>
+          <h2 className="text-5xl md:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             참석 여부
           </h2>
-          <p className="text-stone-400 font-light">
+          <p className="text-stone-400 serif-kr text-lg">
             소중한 분들의 참석 여부를 알려주세요
           </p>
-          <div className="h-px w-24 bg-[#c5a059] mx-auto mt-8"></div>
+          <div className="h-px w-20 bg-gold mx-auto mt-10 opacity-50"></div>
         </motion.div>
 
         <motion.form
@@ -85,7 +86,7 @@ const RSVP: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           onSubmit={handleSubmit}
-          className="bg-white p-8 md:p-12 border border-stone-100 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
+          className="bg-[#faf9f6] p-10 md:p-16 border border-[#f2f0ea]"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">

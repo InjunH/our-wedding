@@ -9,6 +9,10 @@ export interface TimelineItem {
 export interface WeddingData {
   groom: string;
   bride: string;
+  groomKr: string;
+  brideKr: string;
+  groomPhone: string;
+  bridePhone: string;
   weddingDate: Date;
   firstMetDate: Date;
   venue: string;

@@ -14,7 +14,7 @@ const GuestBookList: React.FC<GuestBookListProps> = ({ entries, loading }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <div className="text-stone-400 text-sm">메시지를 불러오는 중...</div>
+        <div className="text-stone-400 text-sm serif-kr">메시지를 불러오는 중...</div>
       </div>
     );
   }
@@ -26,8 +26,8 @@ const GuestBookList: React.FC<GuestBookListProps> = ({ entries, loading }) => {
         animate={{ opacity: 1 }}
         className="flex flex-col items-center justify-center py-16 text-center"
       >
-        <MessageSquare size={40} className="text-stone-300 mb-4" />
-        <p className="text-stone-400 text-sm">
+        <MessageSquare size={40} className="text-stone-300 mb-4" strokeWidth={1} />
+        <p className="text-stone-400 text-sm serif-kr leading-relaxed">
           아직 작성된 메시지가 없습니다.
           <br />
           첫 번째 축하 메시지를 남겨주세요!
