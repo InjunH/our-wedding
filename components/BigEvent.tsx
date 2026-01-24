@@ -24,77 +24,78 @@ const BigEvent: React.FC = () => {
   }, []);
 
   return (
-    <section id="big-event" className="py-48 px-6 md:px-20 bg-white relative overflow-hidden">
+    <section id="big-event" className="py-60 px-6 md:px-20 bg-white relative overflow-hidden">
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center mb-24">
+        <div className="text-center mb-32">
           <motion.h2 
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
-             className="text-5xl md:text-7xl font-medium serif tracking-tight mb-4"
+             className="text-5xl md:text-7xl font-light serif-en italic tracking-tight-serif mb-6"
           >
-            Invitation <br />
-            <span className="italic text-[#c5a059] font-light">to our Big Day</span>
+            The Celebration <br />
+            <span className="not-italic text-[#c5a059] font-light serif-en text-4xl md:text-6xl">of a Lifetime</span>
           </motion.h2>
-          <div className="h-px w-24 bg-[#c5a059] mx-auto mt-8"></div>
+          <div className="h-px w-20 bg-[#c5a059] mx-auto mt-10"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-stretch">
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="flex flex-col justify-center space-y-12"
+            className="flex flex-col justify-center space-y-16"
           >
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 gap-6">
               {[
                 { label: 'Days', value: timeLeft.days },
                 { label: 'Hours', value: timeLeft.hours },
                 { label: 'Mins', value: timeLeft.mins },
                 { label: 'Secs', value: timeLeft.secs },
               ].map(unit => (
-                <div key={unit.label} className="text-center py-4 border-b border-[#f0ede6]">
-                  <span className="text-3xl font-light block mb-1 serif text-[#c5a059]">{unit.value}</span>
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{unit.label}</span>
+                <div key={unit.label} className="text-center py-6 border-b border-[#f2f0ea]">
+                  <span className="text-4xl font-light block mb-2 serif-en italic text-[#c5a059]">{unit.value}</span>
+                  <span className="text-[8px] uppercase tracking-[0.3em] text-stone-300 font-bold">{unit.label}</span>
                 </div>
               ))}
             </div>
             
-            <p className="text-xl text-stone-400 font-light leading-relaxed serif italic text-center md:text-left">
-              "우리의 역사가 하나로 합쳐지는 날, <br />그 가장 빛나는 순간에 함께 해주세요."
+            <p className="text-xl text-stone-400 font-normal leading-[1.8] serif-kr italic text-center md:text-left">
+              우리의 역사가 하나로 합쳐지는 날,<br />
+              그 가장 빛나는 순간에 함께 해주세요.
             </p>
           </motion.div>
 
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="bg-[#faf9f6] p-10 md:p-16 border border-[#f0ede6] relative"
+            className="bg-[#faf9f6] p-12 md:p-20 border border-[#f2f0ea] relative"
           >
-            <div className="space-y-12">
-              <div className="flex items-start gap-6">
-                <Calendar className="text-[#c5a059] shrink-0 mt-1" size={24} />
+            <div className="space-y-16">
+              <div className="flex items-start gap-8">
+                <Calendar className="text-[#c5a059] shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-3 text-stone-400">Date</h4>
-                  <p className="text-2xl serif italic font-medium">Sunday, May 24, 2026</p>
-                  <p className="text-stone-500 mt-1 flex items-center gap-2">
-                    <Clock size={16} className="text-[#c5a059]" /> 12:00 PM
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">Wedding Date</h4>
+                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">Sunday, May 24, 2026</p>
+                  <p className="text-stone-500 mt-2 flex items-center gap-2 serif-kr text-lg">
+                    <Clock size={16} className="text-[#c5a059] opacity-60" strokeWidth={1} /> 오후 12시 정각
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-6">
-                <MapPin className="text-[#c5a059] shrink-0 mt-1" size={24} />
+              <div className="flex items-start gap-8">
+                <MapPin className="text-[#c5a059] shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-3 text-stone-400">Venue</h4>
-                  <p className="text-2xl serif italic font-medium">{WEDDING_DATA.venue}</p>
-                  <p className="text-stone-500 mt-1 font-light leading-relaxed">{WEDDING_DATA.venueAddress}</p>
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">Venue Location</h4>
+                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue}</p>
+                  <p className="text-stone-400 mt-3 font-normal serif-kr text-lg leading-relaxed">{WEDDING_DATA.venueAddress}</p>
                 </div>
               </div>
 
-              <div className="pt-8">
+              <div className="pt-10">
                 <button 
-                  className="w-full py-5 bg-[#333] text-white font-bold text-[10px] uppercase tracking-[0.4em] flex items-center justify-center gap-3 group hover:bg-[#c5a059] transition-colors duration-500"
+                  className="w-full py-6 bg-[#2a2a2a] text-white font-bold text-[10px] uppercase tracking-[0.6em] flex items-center justify-center gap-4 group hover:bg-[#c5a059] transition-all duration-700"
                   onClick={() => alert('Map link would open')}
                 >
-                  View Map & Directions <ArrowUpRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  View Map & Directions <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>
               </div>
             </div>
