@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
 import Hero from './components/Hero';
 import CoreTruth from './components/CoreTruth';
 import Timeline from './components/Timeline';
@@ -40,17 +41,23 @@ const App: React.FC = () => {
 
       {/* Elegant RSVP Button */}
       <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-40">
-        <motion.button
-          whileHover={{ scale: 1.05, backgroundColor: '#c5a059' }}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-[#333] text-white px-12 py-4 rounded-none text-[10px] font-bold tracking-[0.5em] uppercase shadow-2xl transition-all duration-500 flex items-center gap-2"
-          onClick={() => {
-            const el = document.getElementById('rsvp');
-            el?.scrollIntoView({ behavior: 'smooth' });
-          }}
         >
-          RSVP <span className="opacity-50">|</span> 05.24
-        </motion.button>
+          <ShimmerButton
+            shimmerColor="#c5a059"
+            background="rgba(255, 255, 255, 1)"
+            borderRadius="12px"
+            className="px-12 py-4 text-[10px] font-bold tracking-[0.3em] shadow-2xl text-[#333]"
+            onClick={() => {
+              const el = document.getElementById('rsvp');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            참석 의사 전달하기
+          </ShimmerButton>
+        </motion.div>
       </div>
     </div>
   );
