@@ -1,13 +1,16 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
 import GuestBookForm from './GuestBookForm';
 import GuestBookList from './GuestBookList';
+import MemorySlider from './MemorySlider';
+import MemoryTimeline from './MemoryTimeline';
 import { useGuestBook } from '../hooks/useGuestBook';
 
 const GuestBook: React.FC = () => {
   const { entries, loading, error, submitting, addEntry } = useGuestBook();
+  const [showTimeline, setShowTimeline] = useState(false);
 
   return (
     <section className="py-48 px-6 md:px-12 bg-[#faf9f6]">
@@ -27,6 +30,12 @@ const GuestBook: React.FC = () => {
           </p>
           <div className="h-px w-20 bg-gold mx-auto mt-10 opacity-50"></div>
         </motion.div>
+
+        {/* 추억 슬라이더 */}
+        <MemorySlider
+          guestbookEntries={entries}
+          onOpenTimeline={() => setShowTimeline(true)}
+        />
 
         <AnimatePresence>
           {error && (
@@ -62,6 +71,13 @@ const GuestBook: React.FC = () => {
           <GuestBookForm onSubmit={addEntry} submitting={submitting} />
         </motion.div>
       </div>
+
+      {/* 타임라인 모달 */}
+      <MemoryTimeline
+        isOpen={showTimeline}
+        onClose={() => setShowTimeline(false)}
+        guestbookEntries={entries}
+      />
     </section>
   );
 };
