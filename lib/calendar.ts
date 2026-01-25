@@ -30,10 +30,6 @@ const formatDateForGoogle = (date: Date): string => {
   return date.toISOString().replace(/-|:|\.\d{3}/g, '');
 };
 
-const formatDateForNaver = (date: Date): string => {
-  return date.toISOString();
-};
-
 export const downloadICS = (): void => {
   const event = getWeddingEvent();
 
@@ -76,29 +72,4 @@ export const getGoogleCalendarUrl = (): string => {
     details: event.description,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
-};
-
-export const getNaverCalendarUrl = (): string => {
-  const event = getWeddingEvent();
-  const params = new URLSearchParams({
-    title: event.title,
-    scheduleStartAt: formatDateForNaver(event.start),
-    scheduleEndAt: formatDateForNaver(event.end),
-    location: event.location,
-  });
-  return `https://calendar.naver.com/calendar/new?${params.toString()}`;
-};
-
-export const getOutlookCalendarUrl = (): string => {
-  const event = getWeddingEvent();
-  const params = new URLSearchParams({
-    path: '/calendar/action/compose',
-    rru: 'addevent',
-    subject: event.title,
-    startdt: event.start.toISOString(),
-    enddt: event.end.toISOString(),
-    location: event.location,
-    body: event.description,
-  });
-  return `https://outlook.live.com/calendar/0/deeplink/compose?${params.toString()}`;
 };
