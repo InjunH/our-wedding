@@ -1,27 +1,9 @@
 
-import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { WEDDING_DATA } from '../constants';
-
-const CountUp: React.FC<{ value: number }> = ({ value }) => {
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, Math.round);
-
-  useEffect(() => {
-    const animation = animate(count, value, { duration: 3, ease: [0.16, 1, 0.3, 1] });
-    return animation.stop;
-  }, [value]);
-
-  return <motion.span className="serif-en italic font-light text-[18vw] leading-none tracking-tight-serif text-gold">{rounded}</motion.span>;
-};
+import React from 'react';
+import { motion } from 'framer-motion';
+import { HeroGallery } from '@/components/ui/hero-gallery';
 
 const Hero: React.FC = () => {
-  const [daysSince, setDaysSince] = useState(0);
-
-  useEffect(() => {
-    const diff = Math.floor((new Date().getTime() - WEDDING_DATA.firstMetDate.getTime()) / (1000 * 60 * 60 * 24));
-    setDaysSince(diff);
-  }, []);
 
   return (
     <section className="h-screen w-full flex flex-col justify-center items-center px-6 relative overflow-hidden bg-ivory">
@@ -45,17 +27,7 @@ const Hero: React.FC = () => {
           <div className="h-px w-20 bg-gold mx-auto mt-8 opacity-40"></div>
         </motion.div>
 
-        <div className="flex flex-col items-center">
-          <CountUp value={daysSince} />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
-            className="text-[10px] font-bold tracking-[0.5em] text-stone-400 uppercase mt-4"
-          >
-            Days Journeying Together
-          </motion.p>
-        </div>
+        <HeroGallery />
       </div>
 
       <motion.div

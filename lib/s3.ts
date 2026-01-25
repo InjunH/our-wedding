@@ -16,8 +16,9 @@ function isImageFile(key: string): boolean {
   return IMAGE_EXTENSIONS.some((ext) => lowerKey.endsWith(ext));
 }
 
-export async function listS3Objects(): Promise<S3Object[]> {
-  const response = await fetch(BUCKET_URL);
+export async function listS3Objects(prefix?: string): Promise<S3Object[]> {
+  const url = prefix ? `${BUCKET_URL}?prefix=${encodeURIComponent(prefix)}` : BUCKET_URL;
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch S3 bucket: ${response.statusText}`);

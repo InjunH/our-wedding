@@ -5,7 +5,9 @@ import { useS3Photos } from '../hooks/useS3Photos';
 import { S3Object } from '../lib/s3';
 
 const PhotoGallery: React.FC = () => {
-  const { photos, loading, error } = useS3Photos();
+  const { photos: allPhotos, loading, error } = useS3Photos();
+  // 루트 레벨 사진만 필터링 (폴더 안의 사진 제외)
+  const photos = allPhotos.filter((p: S3Object) => !p.key.includes('/'));
   const [selectedPhoto, setSelectedPhoto] = useState<S3Object | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 

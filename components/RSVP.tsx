@@ -1,21 +1,28 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Check, AlertCircle, User, Phone, Users, Utensils, Heart, MessageSquare } from 'lucide-react';
+import { Send, Check, AlertCircle, User, Phone, Users, Heart, MessageSquare } from 'lucide-react';
 import { useRSVP } from '../hooks/useRSVP';
 import { RSVPFormData } from '../types';
 
 const RSVP: React.FC = () => {
-  const { status, error, submitRSVP, reset } = useRSVP();
+  const { status, error, submittedData, submitRSVP, reset } = useRSVP();
   const [formData, setFormData] = useState<RSVPFormData>({
     name: '',
     phone: '',
     attendance: 'attending',
     guestCount: 1,
-    mealPreference: 'regular',
     side: 'groom',
     message: '',
   });
+
+  // 전화번호 형식 자동 변환 (010-1234-5678)
+  const formatPhoneNumber = (value: string) => {
+    const numbers = value.replace(/[^\d]/g, '');
+    if (numbers.length <= 3) return numbers;
+    if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -23,7 +30,11 @@ const RSVP: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'guestCount' ? parseInt(value) || 1 : value,
+      [name]: name === 'guestCount'
+        ? parseInt(value) || 1
+        : name === 'phone'
+          ? formatPhoneNumber(value)
+          : value,
     }));
   };
 
@@ -33,6 +44,12 @@ const RSVP: React.FC = () => {
   };
 
   if (status === 'success') {
+    const attendanceText = submittedData?.attendance === 'attending'
+      ? '참석'
+      : submittedData?.attendance === 'not-attending'
+        ? '불참'
+        : '미정';
+
     return (
       <section id="rsvp" className="py-48 px-6 md:px-20 bg-white">
         <div className="max-w-2xl mx-auto text-center">
@@ -45,6 +62,21 @@ const RSVP: React.FC = () => {
               <Check className="text-white" size={40} strokeWidth={1.5} />
             </div>
             <h3 className="text-4xl serif-kr font-normal mb-6 text-[#2a2a2a]">감사합니다!</h3>
+            {submittedData && (
+              <div className="mb-8 p-6 bg-[#faf9f6] border border-[#f2f0ea] text-left max-w-sm mx-auto">
+                <p className="text-stone-500 text-sm mb-2 serif-kr">
+                  <span className="text-stone-400">성함:</span> {submittedData.name}
+                </p>
+                <p className="text-stone-500 text-sm mb-2 serif-kr">
+                  <span className="text-stone-400">참석 여부:</span> {attendanceText}
+                </p>
+                {submittedData.attendance === 'attending' && (
+                  <p className="text-stone-500 text-sm serif-kr">
+                    <span className="text-stone-400">동반 인원:</span> {submittedData.guestCount}명
+                  </p>
+                )}
+              </div>
+            )}
             <p className="text-stone-400 mb-10 serif-kr text-lg leading-relaxed">
               참석 여부가 성공적으로 제출되었습니다.
               <br />
@@ -148,21 +180,6 @@ const RSVP: React.FC = () => {
                 max="10"
                 className="input-wedding"
               />
-            </div>
-
-            <div className="space-y-2">
-              <label className="label-wedding">
-                <Utensils size={14} /> 식사 선택
-              </label>
-              <select
-                name="mealPreference"
-                value={formData.mealPreference}
-                onChange={handleChange}
-                className="input-wedding"
-              >
-                <option value="regular">일반식</option>
-                <option value="vegetarian">채식</option>
-              </select>
             </div>
 
             <div className="space-y-2">

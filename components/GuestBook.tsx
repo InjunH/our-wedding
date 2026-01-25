@@ -10,8 +10,8 @@ const GuestBook: React.FC = () => {
   const { entries, loading, error, submitting, addEntry } = useGuestBook();
 
   return (
-    <section className="py-48 px-6 md:px-20 bg-[#faf9f6]">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-48 px-6 md:px-12 bg-[#faf9f6]">
+      <div className="max-w-[1800px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -42,23 +42,25 @@ const GuestBook: React.FC = () => {
           )}
         </AnimatePresence>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <GuestBookForm onSubmit={addEntry} submitting={submitting} />
-          </motion.div>
+        {/* 메시지 목록 (상단) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <GuestBookList entries={entries} loading={loading} />
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <GuestBookList entries={entries} loading={loading} />
-          </motion.div>
-        </div>
+        {/* 폼 (하단, 중앙 정렬) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-lg mx-auto"
+        >
+          <GuestBookForm onSubmit={addEntry} submitting={submitting} />
+        </motion.div>
       </div>
     </section>
   );

@@ -17,6 +17,7 @@ interface FirestoreGuestBookEntry {
   message: string;
   createdAt: Timestamp | null;
   side?: 'groom' | 'bride' | 'both';
+  photoUrl?: string;
 }
 
 export const useGuestBook = () => {
@@ -39,6 +40,7 @@ export const useGuestBook = () => {
             message: docData.message,
             createdAt: docData.createdAt?.toDate() || new Date(),
             side: docData.side,
+            photoUrl: docData.photoUrl,
           };
         });
         setEntries(data);

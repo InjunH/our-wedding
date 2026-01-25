@@ -32,7 +32,6 @@ export interface RSVPFormData {
   phone: string;
   attendance: 'attending' | 'not-attending' | 'undecided';
   guestCount: number;
-  mealPreference: 'regular' | 'vegetarian';
   side: 'groom' | 'bride';
   message?: string;
 }
@@ -45,6 +44,7 @@ export interface GuestBookEntry {
   message: string;
   createdAt: Date;
   side?: 'groom' | 'bride' | 'both';
+  photoUrl?: string;
 }
 
 declare global {

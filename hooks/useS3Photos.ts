@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { listS3Objects, S3Object } from '../lib/s3';
 
-export const useS3Photos = () => {
+export const useS3Photos = (prefix?: string) => {
   const [photos, setPhotos] = useState<S3Object[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -9,7 +9,7 @@ export const useS3Photos = () => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const objects = await listS3Objects();
+        const objects = await listS3Objects(prefix);
         setPhotos(objects);
         setLoading(false);
       } catch (err) {
@@ -20,7 +20,7 @@ export const useS3Photos = () => {
     };
 
     fetchPhotos();
-  }, []);
+  }, [prefix]);
 
   return { photos, loading, error };
 };
