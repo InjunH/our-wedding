@@ -5,6 +5,7 @@ import { ShimmerButton } from '@/components/ui/shimmer-button';
 import Hero from './components/Hero';
 import CoreTruth from './components/CoreTruth';
 import Timeline from './components/Timeline';
+import PhotoGallery from './components/PhotoGallery';
 import BigEvent from './components/BigEvent';
 import MapSection from './components/MapSection';
 import RSVP from './components/RSVP';
@@ -32,6 +33,7 @@ const App: React.FC = () => {
         <Hero />
         <CoreTruth />
         <Timeline />
+        <PhotoGallery />
         <BigEvent />
         <MapSection />
         <RSVP />

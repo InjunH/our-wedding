@@ -77,7 +77,7 @@ const BigEvent: React.FC = () => {
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">Wedding Date</h4>
                   <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">Sunday, May 24, 2026</p>
                   <p className="text-stone-500 mt-2 flex items-center gap-2 serif-kr text-lg">
-                    <Clock size={16} className="text-gold opacity-60" strokeWidth={1} /> 오후 12시 정각
+                    <Clock size={16} className="text-gold opacity-60" strokeWidth={1} /> 오후 1시 정각
                   </p>
                 </div>
               </div>

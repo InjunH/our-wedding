@@ -8,7 +8,7 @@ export const WEDDING_DATA: WeddingData = {
   brideKr: "윤누리",
   groomPhone: "010-2620-6424",
   bridePhone: "010-6406-7539",
-  weddingDate: new Date('2026-05-24T12:00:00'),
+  weddingDate: new Date('2026-05-24T13:00:00'),
   firstMetDate: new Date('2020-05-24T18:00:00'), // 2,190 days roughly
   venue1: "서울대학교",
   venue2: "호암교수회관",
