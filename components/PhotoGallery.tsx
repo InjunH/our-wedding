@@ -4,10 +4,47 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useS3Photos } from '../hooks/useS3Photos';
 import { S3Object } from '../lib/s3';
 
+// 사진 순서 하드코딩 (key만 지정, 나머지는 최신순)
+const PHOTO_ORDER: { [position: number]: string } = {
+  1: '2CC3E1B3-88CA-47F3-97BC-9A4D2B96D888.png',
+  2: 'C5839766-B0B8-4420-98E5-EB584F8AF2B8.png',
+  3: 'BDD7CF28-3773-4C2E-A507-0FFD005C6BE3.png',
+  4: '5713F127-3843-4499-8928-06BDF6774B2A.png',
+  5: 'F1375FD0-93AC-47AB-8F66-4A076219B4EF.png',
+  6: '52D9B7EB-E1DF-4D44-99A2-670332E7FBA5.png',
+  17: '8DA8EF17-0163-436B-B2B1-F280C62A7B07.png',
+  18: '9A8AE157-B5FF-4D21-BE45-FF755E0C6E15.png',
+};
+
 const PhotoGallery: React.FC = () => {
   const { photos: allPhotos, loading, error } = useS3Photos();
-  // 루트 레벨 사진만 필터링 (폴더 안의 사진 제외)
-  const photos = allPhotos.filter((p: S3Object) => !p.key.includes('/'));
+
+  // 루트 레벨 사진만 필터링 + 커스텀 순서 정렬
+  const photos = React.useMemo(() => {
+    const filtered = allPhotos.filter((p: S3Object) => !p.key.includes('/'));
+    const orderedKeys = Object.values(PHOTO_ORDER);
+    const unordered = filtered
+      .filter((p) => !orderedKeys.includes(p.key))
+      .sort(
+        (a, b) =>
+          new Date(b.lastModified).getTime() -
+          new Date(a.lastModified).getTime()
+      );
+
+    // 결과 배열 구성
+    const result: S3Object[] = [];
+    let unorderedIdx = 0;
+
+    for (let i = 1; i <= filtered.length; i++) {
+      if (PHOTO_ORDER[i]) {
+        const photo = filtered.find((p) => p.key === PHOTO_ORDER[i]);
+        if (photo) result.push(photo);
+      } else if (unorderedIdx < unordered.length) {
+        result.push(unordered[unorderedIdx++]);
+      }
+    }
+    return result;
+  }, [allPhotos]);
   const [selectedPhoto, setSelectedPhoto] = useState<S3Object | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
