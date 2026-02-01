@@ -25,8 +25,8 @@ const CoreTruth: React.FC = () => {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl md:text-6xl font-normal leading-[1.4] serif-kr tracking-tight text-[#2a2a2a]"
           >
-            2,190일의 기록,<br />
-            <span className="serif-en italic text-gold font-light text-3xl md:text-5xl block mt-4">Where Two Worlds Become One</span>
+            동료에서 연인으로,<br />
+            <span className="serif-kr italic text-gold font-light text-3xl md:text-5xl block mt-4">연인에서 가족으로</span>
           </motion.h2>
 
           <motion.div
@@ -36,10 +36,10 @@ const CoreTruth: React.FC = () => {
             transition={{ duration: 1.5, delay: 0.4 }}
             className="space-y-8 text-stone-500 font-normal serif-kr text-lg md:text-xl leading-[2.2] max-w-2xl mx-auto"
           >
-            <p>서로 다른 두 세계가 만나 하나의 역사가 되기까지.</p>
-            <p>우리가 함께 걸어온 6년의 시간은 단순한 숫자가 아닌,<br />서로를 향한 깊은 신뢰와 사랑의 증명이었습니다.</p>
+            <p>같은 꿈을 꾸는 사람들이 만났습니다.</p>
+            <p>함께 공부하고, 함께 일하고, 때론 함께 넘어지기도 했지만 —<br />결국 우리는 늘 나란히 일어섰습니다.</p>
             <p className="pt-12 serif-kr font-bold text-gold text-2xl md:text-3xl leading-relaxed italic">
-              이제 그 찬란한 시작의 순간에<br />소중한 당신을 초대합니다.
+              앞으로도 이렇게 살고 싶어서,<br />결혼합니다.
             </p>
           </motion.div>
         </div>

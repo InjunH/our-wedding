@@ -17,7 +17,7 @@ export const useS3Photos = (prefix?: string, thumbnailsOnly: boolean = false) =>
         const result = await listS3Objects({
           prefix,
           thumbnailsOnly,
-          maxKeys: 50  // 첫 50장만
+          maxKeys: 100  // 첫 100장
         });
 
         setPhotos(result.objects);
@@ -43,7 +43,7 @@ export const useS3Photos = (prefix?: string, thumbnailsOnly: boolean = false) =>
       const result = await listS3Objects({
         prefix,
         thumbnailsOnly,
-        maxKeys: 50,
+        maxKeys: 100,
         marker: nextMarker
       });
 

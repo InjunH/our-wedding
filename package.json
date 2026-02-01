@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "upload": "npx ts-node --esm --project scripts/tsconfig.json scripts/upload-photos.ts"
+    "upload": "npx ts-node --esm --project scripts/tsconfig.json scripts/upload-photos.ts",
+    "upload:auto": "npx ts-node --esm --project scripts/tsconfig.json scripts/upload-photos-auto.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.975.0",

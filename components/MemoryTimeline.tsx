@@ -1,5 +1,4 @@
-
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import { useS3Photos } from '../hooks/useS3Photos';
@@ -7,14 +6,66 @@ import { GuestBookEntry } from '../types';
 import { S3Object, getThumbnailOriginalUrl } from '../lib/s3';
 import { getImageDateTaken } from '../lib/exif-utils';
 
+// 지연 로딩 이미지 컴포넌트
+const LazyImage = memo(({ src, alt, className, onError }: {
+  src: string;
+  alt: string;
+  className?: string;
+  onError?: () => void;
+}) => {
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '100px' }
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={imgRef} className={className}>
+      {isInView ? (
+        <img
+          src={src}
+          alt={alt}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setIsLoaded(true)}
+          onError={onError}
+        />
+      ) : (
+        <div className="w-full h-full bg-white/20 animate-pulse" />
+      )}
+    </div>
+  );
+});
+
 interface TimelineItem {
   id: string;
   type: 'history' | 'guestbook';
-  url: string;
+  url: string;  // 썸네일 URL (S3에서 가져온 것)
   date: Date;
   exifDate?: Date | null;
   name?: string;
   message?: string;
+}
+
+interface ClusteredItem {
+  items: { item: TimelineItem; index: number }[];
+  position: number;
+  dateKey: string;
 }
 
 interface MemoryTimelineProps {
@@ -23,8 +74,11 @@ interface MemoryTimelineProps {
   guestbookEntries: GuestBookEntry[];
 }
 
-// 타임라인 시작일: 2023년 4월
-const TIMELINE_START = new Date(2023, 3, 1);
+// 타임라인 시작일: 2024년 4월
+const TIMELINE_START = new Date(2024, 3, 1);
+
+// 스와이프 감지를 위한 최소 거리
+const SWIPE_THRESHOLD = 50;
 
 const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestbookEntries }) => {
   const {
@@ -33,30 +87,25 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
     loadingMore,
     hasMore,
     loadMore
-  } = useS3Photos('history/', true);
+  } = useS3Photos('history/', true);  // 썸네일만 로드
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
-  const [exifDates, setExifDates] = useState<Map<string, Date | null>>(new Map());
   const [originalUrls, setOriginalUrls] = useState<Map<string, string>>(new Map());
   const timelineBarRef = useRef<HTMLDivElement>(null);
+  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 100 });
+  const rafRef = useRef<number | null>(null);
 
-  // 썸네일 URL에서 원본 URL 도출
+  // 스와이프 관련 상태
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const mainContentRef = useRef<HTMLDivElement>(null);
+
+  // 썸네일 URL에서 원본 URL 도출 (캐시 사용)
   const getOriginalUrl = useCallback((thumbnailUrl: string): string => {
-    // 캐시 확인
     if (originalUrls.has(thumbnailUrl)) {
       return originalUrls.get(thumbnailUrl)!;
     }
 
-    // 썸네일 URL에서 원본 URL 도출
     const originalUrl = getThumbnailOriginalUrl(thumbnailUrl);
-
-    console.log('🔍 URL 변환:', {
-      썸네일: thumbnailUrl,
-      원본: originalUrl,
-      변환됨: thumbnailUrl !== originalUrl
-    });
-
-    // 캐시 저장 (재계산 방지)
     setOriginalUrls(prev => new Map(prev).set(thumbnailUrl, originalUrl));
 
     return originalUrl;
@@ -66,67 +115,88 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
     setFailedImages(prev => new Set(prev).add(id));
   };
 
-  // EXIF 날짜 로드
-  useEffect(() => {
-    if (!isOpen) return;
+  // 현재 날짜
+  const now = useMemo(() => new Date(), []);
 
-    const loadExifDates = async () => {
-      const urls: string[] = [
-        ...historyPhotos.map(p => p.url),
-        ...guestbookEntries.filter(e => e.photoUrl).map(e => e.photoUrl!),
-      ];
+  // 날짜를 타임라인 위치(%)로 변환
+  const getPositionPercent = useCallback((date: Date) => {
+    const startTime = TIMELINE_START.getTime();
+    const endTime = now.getTime();
+    const dateTime = date.getTime();
 
-      for (const url of urls) {
-        if (!exifDates.has(url)) {
-          const date = await getImageDateTaken(url);
-          if (date) {
-            setExifDates(prev => new Map(prev).set(url, date));
-          }
-        }
-      }
-    };
+    if (dateTime < startTime) return 0;
+    if (dateTime > endTime) return 100;
 
-    loadExifDates();
-  }, [isOpen, historyPhotos, guestbookEntries]);
+    return ((dateTime - startTime) / (endTime - startTime)) * 100;
+  }, [now]);
 
   // history 사진과 guestbook 사진을 합쳐서 타임라인 생성
-  const allItems: TimelineItem[] = React.useMemo(() => {
+  const allItems: TimelineItem[] = useMemo(() => {
     const items: TimelineItem[] = [];
 
-    // history 폴더 사진 추가
     historyPhotos.forEach((photo: S3Object) => {
-      const exifDate = exifDates.get(photo.url);
+      const extractedDate = getImageDateTaken(photo.url);
       items.push({
         id: `history-${photo.key}`,
         type: 'history',
-        url: photo.url,
-        date: exifDate || new Date(photo.lastModified),
-        exifDate,
+        url: photo.url,  // 썸네일 URL
+        date: extractedDate || new Date(photo.lastModified),
+        exifDate: extractedDate,
       });
     });
 
-    // 방명록 사진 추가 (사진이 있는 것만)
     guestbookEntries.filter(entry => entry.photoUrl).forEach((entry) => {
-      const exifDate = exifDates.get(entry.photoUrl!);
+      const extractedDate = getImageDateTaken(entry.photoUrl!);
       items.push({
         id: `guestbook-${entry.id}`,
         type: 'guestbook',
         url: entry.photoUrl!,
-        date: exifDate || entry.createdAt,
-        exifDate,
+        date: extractedDate || entry.createdAt,
+        exifDate: extractedDate,
         name: entry.name,
         message: entry.message,
       });
     });
 
-    // 날짜순 정렬 (오래된 순 -> 최신순)
     return items.sort((a, b) => a.date.getTime() - b.date.getTime());
-  }, [historyPhotos, guestbookEntries, exifDates]);
+  }, [historyPhotos, guestbookEntries]);
 
-  // 로드 실패한 이미지 제외
   const timelineItems = allItems.filter(item => !failedImages.has(item.id));
-
   const currentItem = timelineItems[selectedIndex];
+
+  // 클러스터링: 같은 날짜의 사진들을 그룹화
+  const clusteredItems = useMemo(() => {
+    const clusters: ClusteredItem[] = [];
+    const clusterMap = new Map<string, ClusteredItem>();
+
+    timelineItems.forEach((item, index) => {
+      const dateKey = `${item.date.getFullYear()}-${item.date.getMonth()}-${item.date.getDate()}`;
+      const position = getPositionPercent(item.date);
+
+      if (clusterMap.has(dateKey)) {
+        clusterMap.get(dateKey)!.items.push({ item, index });
+      } else {
+        const cluster: ClusteredItem = {
+          items: [{ item, index }],
+          position,
+          dateKey,
+        };
+        clusterMap.set(dateKey, cluster);
+        clusters.push(cluster);
+      }
+    });
+
+    return clusters;
+  }, [timelineItems, getPositionPercent]);
+
+  // 보이는 범위의 클러스터만 필터링
+  const visibleClusters = useMemo(() => {
+    return clusteredItems.filter(cluster => {
+      const isVisible = cluster.position >= visibleRange.start && cluster.position <= visibleRange.end;
+      const hasSelectedItem = cluster.items.some(({ index }) => index === selectedIndex);
+      return isVisible || hasSelectedItem;
+    });
+  }, [clusteredItems, visibleRange, selectedIndex]);
 
   const goToPrevious = useCallback(() => {
     setSelectedIndex((prev) => (prev === 0 ? timelineItems.length - 1 : prev - 1));
@@ -136,6 +206,54 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
     setSelectedIndex((prev) => (prev === timelineItems.length - 1 ? 0 : prev + 1));
   }, [timelineItems.length]);
 
+  // 스와이프 핸들러
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+
+    const touchEnd = {
+      x: e.changedTouches[0].clientX,
+      y: e.changedTouches[0].clientY,
+    };
+
+    const deltaX = touchEnd.x - touchStartRef.current.x;
+    const deltaY = touchEnd.y - touchStartRef.current.y;
+
+    // 수평 스와이프가 수직보다 클 때만 처리
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+      if (deltaX > 0) {
+        goToPrevious();
+      } else {
+        goToNext();
+      }
+    }
+
+    touchStartRef.current = null;
+  }, [goToPrevious, goToNext]);
+
+  // 월별 빠른 이동
+  const jumpToMonth = useCallback((monthDate: Date) => {
+    const targetTime = monthDate.getTime();
+    let closestIndex = 0;
+    let closestDiff = Infinity;
+
+    timelineItems.forEach((item, index) => {
+      const diff = Math.abs(item.date.getTime() - targetTime);
+      if (diff < closestDiff) {
+        closestDiff = diff;
+        closestIndex = index;
+      }
+    });
+
+    setSelectedIndex(closestIndex);
+  }, [timelineItems]);
+
   // 인덱스 범위 조정
   useEffect(() => {
     if (selectedIndex >= timelineItems.length && timelineItems.length > 0) {
@@ -143,6 +261,7 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
     }
   }, [selectedIndex, timelineItems.length]);
 
+  // 키보드 이벤트
   useEffect(() => {
     if (!isOpen) return;
 
@@ -177,37 +296,18 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
     }).format(date);
   };
 
-  // 현재 날짜
-  const now = new Date();
-
-  // 타임라인의 총 개월 수 계산
+  // 타임라인 총 개월 수
   const totalMonths = (now.getFullYear() - TIMELINE_START.getFullYear()) * 12 +
     (now.getMonth() - TIMELINE_START.getMonth()) + 1;
 
-  // 월 목록 생성
-  const months = Array.from({ length: totalMonths }, (_, i) => {
-    const date = new Date(TIMELINE_START.getFullYear(), TIMELINE_START.getMonth() + i, 1);
-    return date;
-  });
+  const months = useMemo(() => Array.from({ length: totalMonths }, (_, i) => {
+    return new Date(TIMELINE_START.getFullYear(), TIMELINE_START.getMonth() + i, 1);
+  }), [totalMonths]);
 
-  // 날짜를 타임라인 위치(%)로 변환
-  const getPositionPercent = (date: Date) => {
-    const startTime = TIMELINE_START.getTime();
-    const endTime = now.getTime();
-    const dateTime = date.getTime();
-
-    if (dateTime < startTime) return 0;
-    if (dateTime > endTime) return 100;
-
-    return ((dateTime - startTime) / (endTime - startTime)) * 100;
-  };
-
-  // 월 포맷
   const formatMonth = (date: Date) => {
     return new Intl.DateTimeFormat('ko-KR', { month: 'short' }).format(date);
   };
 
-  // 연도가 바뀌는 월인지 확인
   const isYearStart = (date: Date, index: number) => {
     return index === 0 || date.getMonth() === 0;
   };
@@ -221,7 +321,60 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
       const targetScroll = (position / 100) * scrollWidth - clientWidth / 2;
       timelineBarRef.current.scrollTo({ left: targetScroll, behavior: 'smooth' });
     }
-  }, [selectedIndex, currentItem]);
+  }, [selectedIndex, currentItem, getPositionPercent]);
+
+  // 스크롤 최적화 (requestAnimationFrame)
+  useEffect(() => {
+    const container = timelineBarRef.current;
+    if (!container) return;
+
+    let ticking = false;
+
+    const updateVisibleRange = () => {
+      const scrollLeft = container.scrollLeft;
+      const clientWidth = container.clientWidth;
+      const scrollWidth = container.scrollWidth;
+
+      const buffer = 20;
+      const startPercent = Math.max(0, (scrollLeft / scrollWidth) * 100 - buffer);
+      const endPercent = Math.min(100, ((scrollLeft + clientWidth) / scrollWidth) * 100 + buffer);
+
+      setVisibleRange({ start: startPercent, end: endPercent });
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        rafRef.current = requestAnimationFrame(updateVisibleRange);
+        ticking = true;
+      }
+    };
+
+    updateVisibleRange();
+    container.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [isOpen]);
+
+  // 인접 이미지 프리로드 (원본 URL)
+  useEffect(() => {
+    if (!currentItem) return;
+
+    const preloadImages = [
+      timelineItems[selectedIndex - 1]?.url,
+      timelineItems[selectedIndex + 1]?.url,
+    ].filter(Boolean);
+
+    preloadImages.forEach(url => {
+      const img = new Image();
+      img.src = getOriginalUrl(url!);
+    });
+  }, [selectedIndex, timelineItems, currentItem, getOriginalUrl]);
 
   if (!isOpen) return null;
 
@@ -237,7 +390,7 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
         {/* 헤더 */}
         <div className="flex items-center justify-between p-4 md:p-6" onClick={(e) => e.stopPropagation()}>
           <div className="text-white/80">
-            <h3 className="text-lg serif-kr">누리 & 인준의 추억</h3>
+            <h3 className="text-lg serif-kr">우리의 순간들</h3>
             <p className="text-sm text-white/50">{selectedIndex + 1} / {timelineItems.length}</p>
           </div>
           <button
@@ -248,8 +401,14 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
           </button>
         </div>
 
-        {/* 메인 컨텐츠 */}
-        <div className="flex-1 flex items-center justify-center relative px-4" onClick={(e) => e.stopPropagation()}>
+        {/* 메인 컨텐츠 (스와이프 지원) */}
+        <div
+          ref={mainContentRef}
+          className="flex-1 flex items-center justify-center relative px-4"
+          onClick={(e) => e.stopPropagation()}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* 이전 버튼 */}
           <button
             onClick={goToPrevious}
@@ -262,9 +421,10 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
           {currentItem && (
             <motion.div
               key={currentItem.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
               className="max-w-4xl w-full"
             >
               <div className="relative">
@@ -272,10 +432,11 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
                   src={getOriginalUrl(currentItem.url)}
                   alt="추억"
                   className="max-h-[60vh] w-auto mx-auto object-contain rounded-sm"
+                  loading="eager"
+                  decoding="async"
                   onError={() => handleImageError(currentItem.id)}
                 />
 
-                {/* 방명록 사진인 경우 정보 표시 */}
                 {currentItem.type === 'guestbook' && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -295,7 +456,6 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
                 )}
               </div>
 
-              {/* 날짜 */}
               <p className="text-center text-white/40 text-sm mt-4 serif-kr">
                 {formatDate(currentItem.date)}
               </p>
@@ -313,7 +473,6 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
 
         {/* 하단 타임라인 바 */}
         <div className="px-4 pb-4" onClick={(e) => e.stopPropagation()}>
-          {/* 스크롤 가능한 타임라인 */}
           <div
             ref={timelineBarRef}
             className="overflow-x-auto pb-2"
@@ -340,16 +499,16 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
 
               {/* 타임라인 컨테이너 */}
               <div className="relative h-16 bg-white/10 rounded-lg overflow-visible">
-                {/* 월 구분선 */}
+                {/* 월 구분선 (클릭으로 빠른 이동) */}
                 <div className="absolute inset-0 flex">
                   {months.map((month, idx) => (
-                    <div
+                    <button
                       key={idx}
-                      className={`flex-1 border-r border-white/10 last:border-r-0 relative ${
+                      onClick={() => jumpToMonth(month)}
+                      className={`flex-1 border-r border-white/10 last:border-r-0 relative hover:bg-white/5 transition-colors ${
                         isYearStart(month, idx) ? 'border-l border-l-white/30' : ''
                       }`}
                     >
-                      {/* 월 라벨 */}
                       <span
                         className={`absolute bottom-1 left-1 text-[9px] ${
                           isYearStart(month, idx) ? 'text-white/50' : 'text-white/20'
@@ -357,44 +516,51 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
                       >
                         {formatMonth(month)}
                       </span>
-                    </div>
+                    </button>
                   ))}
                 </div>
 
-                {/* 사진 도트들 */}
-                <div className="absolute inset-0">
-                  {timelineItems.map((item, index) => {
-                    const position = getPositionPercent(item.date);
-                    const isSelected = index === selectedIndex;
+                {/* 클러스터된 사진 도트들 */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {visibleClusters.map((cluster) => {
+                    const isSelected = cluster.items.some(({ index }) => index === selectedIndex);
+                    const itemCount = cluster.items.length;
+                    const firstItem = cluster.items[0];
 
                     return (
                       <button
-                        key={item.id}
-                        className="absolute transition-all duration-200"
+                        key={cluster.dateKey}
+                        className="absolute transition-all duration-200 pointer-events-auto"
                         style={{
-                          left: `${position}%`,
+                          left: `${cluster.position}%`,
                           top: '50%',
                           transform: `translate(-50%, -50%) scale(${isSelected ? 1.3 : 1})`,
                           zIndex: isSelected ? 20 : 10,
                         }}
-                        onClick={() => setSelectedIndex(index)}
+                        onClick={() => setSelectedIndex(firstItem.index)}
                       >
                         <div
-                          className={`w-8 h-8 rounded-full overflow-hidden border-2 transition-all ${
+                          className={`w-8 h-8 rounded-full overflow-hidden border-2 transition-all relative ${
                             isSelected
                               ? 'border-gold ring-2 ring-gold/50'
                               : 'border-white/50 hover:border-gold/70'
                           }`}
                           style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.4)' }}
                         >
-                          <img
-                            src={item.url}
+                          <LazyImage
+                            src={firstItem.item.url}
                             alt=""
-                            className="w-full h-full object-cover"
-                            onError={() => handleImageError(item.id)}
+                            className="w-full h-full"
+                            onError={() => handleImageError(firstItem.item.id)}
                           />
+                          {/* 클러스터 카운트 배지 */}
+                          {itemCount > 1 && (
+                            <div className="absolute -top-1 -right-1 bg-gold text-black text-[8px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                              {itemCount > 9 ? '9+' : itemCount}
+                            </div>
+                          )}
                         </div>
-                        {item.type === 'guestbook' && (
+                        {firstItem.item.type === 'guestbook' && (
                           <div className="absolute -bottom-1 left-1/2 -translate-x-1/2">
                             <Heart size={8} className="text-gold fill-gold" />
                           </div>
@@ -418,20 +584,13 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
 
           {/* 더보기 버튼 */}
           {hasMore && (
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-4">
               <button
                 onClick={loadMore}
                 disabled={loadingMore}
-                className="px-6 py-3 bg-gold/90 text-white rounded-lg hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed transition-all serif-kr shadow-lg"
+                className="px-6 py-2 bg-gold/90 text-white rounded-lg hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed transition-all serif-kr text-sm"
               >
-                {loadingMore ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>추억 불러오는 중...</span>
-                  </div>
-                ) : (
-                  <span>더 많은 추억 보기 ({historyPhotos.length}장 로드됨)</span>
-                )}
+                {loadingMore ? '불러오는 중...' : `더 보기`}
               </button>
             </div>
           )}

@@ -114,7 +114,6 @@ export function getImageUrl(key: string): string {
  * 인코딩된 URL도 처리: %2Fthumb%2F → %2F
  */
 export function getThumbnailOriginalUrl(thumbnailUrl: string): string {
-  // 인코딩된 경로와 일반 경로 모두 처리
   return thumbnailUrl
     .replace('%2Fthumb%2F', '%2F')  // 인코딩된 경로
     .replace('/thumb/', '/');        // 일반 경로 (fallback)
@@ -124,5 +123,17 @@ export function getThumbnailOriginalUrl(thumbnailUrl: string): string {
  * URL이 썸네일인지 확인
  */
 export function isThumbnailUrl(url: string): boolean {
-  return url.includes('/thumb/');
+  return url.includes('/thumb/') || url.includes('%2Fthumb%2F');
+}
+
+/**
+ * 원본 URL에서 썸네일 URL 생성
+ * history/YYYY-MM/xxx.jpg -> history/YYYY-MM/thumb/xxx.jpg
+ */
+export function getThumbnailUrl(url: string): string {
+  const match = url.match(/(history\/\d{4}-\d{2}\/)(.*)/);
+  if (match) {
+    return url.replace(match[0], `${match[1]}thumb/${match[2]}`);
+  }
+  return url;
 }

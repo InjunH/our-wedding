@@ -55,40 +55,25 @@ const extractDateFromFilename = (url: string): Date | null => {
   return null;
 };
 
-// 폴더 경로 또는 파일명에서 날짜 추출
+// 폴더 경로 또는 파일명에서 날짜 추출 (동기 함수로 변경)
 // 우선순위: 1. 폴더 경로 (history/2023-04/) 2. 파일명
-export const getImageDateTaken = (url: string): Promise<Date | null> => {
-  return new Promise((resolve) => {
-    // 1. 폴더 경로에서 날짜 추출 시도
-    const folderDate = extractDateFromFolderPath(url);
-    if (folderDate) {
-      console.log(`[Folder] ${decodeURIComponent(url.split('/').slice(-2).join('/'))}: ${folderDate.toISOString()}`);
-      resolve(folderDate);
-      return;
-    }
+export const getImageDateTaken = (url: string): Date | null => {
+  // 1. 폴더 경로에서 날짜 추출 시도
+  const folderDate = extractDateFromFolderPath(url);
+  if (folderDate) {
+    return folderDate;
+  }
 
-    // 2. 파일명에서 날짜 추출 시도
-    const filenameDate = extractDateFromFilename(url);
-    if (filenameDate) {
-      console.log(`[Filename] ${decodeURIComponent(url.split('/').pop() || '')}: ${filenameDate.toISOString()}`);
-    }
-    resolve(filenameDate);
-  });
+  // 2. 파일명에서 날짜 추출 시도
+  return extractDateFromFilename(url);
 };
 
-// 여러 이미지의 촬영 날짜를 일괄 조회
-export const getImagesDateTaken = async (urls: string[]): Promise<Map<string, Date | null>> => {
+// 여러 이미지의 촬영 날짜를 일괄 조회 (동기)
+export const getImagesDateTaken = (urls: string[]): Map<string, Date | null> => {
   const results = new Map<string, Date | null>();
 
-  // 병렬로 처리하되 동시에 최대 5개씩
-  const batchSize = 5;
-  for (let i = 0; i < urls.length; i += batchSize) {
-    const batch = urls.slice(i, i + batchSize);
-    const promises = batch.map(async (url) => {
-      const date = await getImageDateTaken(url);
-      results.set(url, date);
-    });
-    await Promise.all(promises);
+  for (const url of urls) {
+    results.set(url, getImageDateTaken(url));
   }
 
   return results;

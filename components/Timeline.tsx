@@ -28,14 +28,13 @@ const Timeline: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.2 }}
             >
-              <span className="text-gold text-[10px] font-bold tracking-[0.7em] mb-8 uppercase block">Archive 01</span>
-              <h2 className="text-[#2a2a2a] text-6xl md:text-8xl font-light serif-en tracking-tight-serif leading-none mb-12 italic">
-                The Records<br /><span className="not-italic text-gold font-extralight serif-en">of N & I</span>
+              <span className="text-gold text-[10px] font-bold tracking-[0.7em] mb-8 uppercase block">우리가 걸어온 길</span>
+              <h2 className="text-[#2a2a2a] text-6xl md:text-8xl font-light serif-kr tracking-tight-serif leading-none mb-12">
+                1,100일의 기록
               </h2>
               <div className="h-px w-24 bg-gold mb-12"></div>
               <p className="text-stone-400 text-lg max-w-sm font-normal leading-relaxed serif-kr italic">
-                우리가 함께한 모든 순간들이 모여 하나의 작품이 되었습니다.
-                그 소중한 조각들을 공유합니다.
+                동료로 만나 연인이 되고, 이제 가족이 됩니다.
               </p>
             </motion.div>
           </div>
@@ -83,12 +82,12 @@ const Timeline: React.FC = () => {
               <div className="text-gold mb-12 flex justify-center opacity-60">
                 <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               </div>
-              <h2 className="text-[#2a2a2a] text-5xl md:text-7xl font-light serif-en italic tracking-tight-serif leading-tight">
-                A New Chapter<br />
-                <span className="not-italic text-gold font-light serif-en">Begins With You</span>
+              <h2 className="text-[#2a2a2a] text-5xl md:text-7xl font-light serif-kr tracking-tight-serif leading-tight">
+                이제,<br />
+                <span className="text-gold font-light serif-kr">같은 이름으로</span>
               </h2>
               <div className="mt-20">
-                <span className="text-[9px] font-bold tracking-[0.6em] text-stone-300 uppercase animate-pulse">Official Invitation</span>
+                <span className="text-[9px] font-bold tracking-[0.6em] text-stone-300 uppercase animate-pulse">결혼식에 초대합니다</span>
               </div>
             </motion.div>
           </div>

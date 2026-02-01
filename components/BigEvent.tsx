@@ -31,10 +31,9 @@ const BigEvent: React.FC = () => {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-light serif-en italic tracking-tight-serif mb-6"
+            className="text-5xl md:text-7xl font-light serif-kr tracking-tight-serif mb-6"
           >
-            The Celebration <br />
-            <span className="not-italic text-gold font-light serif-en text-4xl md:text-6xl">of a Lifetime</span>
+            결혼합니다
           </motion.h2>
           <div className="h-px w-20 bg-gold mx-auto mt-10"></div>
         </div>
@@ -47,10 +46,10 @@ const BigEvent: React.FC = () => {
           >
             <div className="grid grid-cols-4 gap-6">
               {[
-                { label: 'Days', value: timeLeft.days },
-                { label: 'Hours', value: timeLeft.hours },
-                { label: 'Mins', value: timeLeft.mins },
-                { label: 'Secs', value: timeLeft.secs },
+                { label: '일', value: timeLeft.days },
+                { label: '시간', value: timeLeft.hours },
+                { label: '분', value: timeLeft.mins },
+                { label: '초', value: timeLeft.secs },
               ].map(unit => (
                 <div key={unit.label} className="text-center py-6 border-b border-[#f2f0ea]">
                   <span className="text-4xl font-light block mb-2 serif-en italic text-gold">{unit.value}</span>
@@ -60,8 +59,8 @@ const BigEvent: React.FC = () => {
             </div>
 
             <p className="text-xl text-stone-400 font-normal leading-[1.8] serif-kr italic text-center md:text-left">
-              우리의 역사가 하나로 합쳐지는 날,<br />
-              그 가장 빛나는 순간에 함께 해주세요.
+              저희 두 사람이 부부가 되는 날,<br />
+              함께해 주세요.
             </p>
           </motion.div>
 
@@ -74,8 +73,8 @@ const BigEvent: React.FC = () => {
               <div className="flex items-start gap-8">
                 <Calendar className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">Wedding Date</h4>
-                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">Sunday, May 24, 2026</p>
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">일시</h4>
+                  <p className="text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">2026년 5월 24일 일요일</p>
                   <p className="text-stone-500 mt-2 flex items-center gap-2 serif-kr text-lg">
                     <Clock size={16} className="text-gold opacity-60" strokeWidth={1} /> 오후 1시 정각
                   </p>
@@ -85,9 +84,9 @@ const BigEvent: React.FC = () => {
               <div className="flex items-start gap-8">
                 <MapPin className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">Venue Location</h4>
-                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue1}</p>
-                  <p className="text-3xl serif-en italic font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue2}</p>
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">장소</h4>
+                  <p className="text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue1}</p>
+                  <p className="text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue2}</p>
                   <p className="text-stone-400 mt-3 font-normal serif-kr text-lg leading-relaxed">{WEDDING_DATA.venueAddress}</p>
                 </div>
               </div>
@@ -101,7 +100,7 @@ const BigEvent: React.FC = () => {
                     el?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  View Map & Directions <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  지도 보기 <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>
               </div>
             </div>

@@ -20,7 +20,7 @@ const Hero: React.FC = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="text-[10px] font-semibold tracking-[0.6em] text-gold uppercase mb-6 block">Our History</span>
+          <span className="text-[10px] font-semibold tracking-[0.6em] text-gold uppercase mb-6 block">우리의 이야기</span>
           <h1 className="text-5xl md:text-8xl font-light tracking-tight-serif mb-2 serif-en italic text-[#2a2a2a]">
             Nuri <span className="font-extralight text-stone-300 mx-2">&</span> Injun
           </h1>
@@ -37,7 +37,7 @@ const Hero: React.FC = () => {
         transition={{ delay: 2.8 }}
       >
         <div className="w-px h-12 bg-gradient-to-b from-gold to-transparent"></div>
-        <span className="text-[8px] font-bold tracking-[0.4em] text-stone-400 uppercase">Discover more</span>
+        <span className="text-[8px] font-bold tracking-[0.4em] text-stone-400 uppercase">아래로 스크롤</span>
       </motion.div>
     </section>
   );

@@ -134,7 +134,7 @@ const MemorySlider: React.FC<MemorySliderProps> = ({ guestbookEntries, onOpenTim
           className="inline-flex items-center gap-2 px-6 py-2.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 hover:border-gold/50 text-gold rounded-full transition-all serif-kr text-sm"
         >
           <Play size={14} />
-          <span>{timelineItems.length}장의 추억 타임라인 보기</span>
+          <span>우리의 순간들 보기</span>
         </button>
       </div>
     </div>
