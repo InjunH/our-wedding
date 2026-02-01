@@ -52,8 +52,8 @@ const BigEvent: React.FC = () => {
                 { label: '초', value: timeLeft.secs },
               ].map(unit => (
                 <div key={unit.label} className="text-center py-6 border-b border-[#f2f0ea]">
-                  <span className="text-4xl font-light block mb-2 serif-en italic text-gold">{unit.value}</span>
-                  <span className="text-[8px] uppercase tracking-[0.3em] text-stone-300 font-bold">{unit.label}</span>
+                  <span className="text-4xl font-light serif-en italic text-gold">{unit.value}</span>
+                  <span className="text-sm text-stone-400 ml-1">{unit.label}</span>
                 </div>
               ))}
             </div>
