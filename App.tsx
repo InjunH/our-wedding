@@ -32,7 +32,7 @@ const App: React.FC = () => {
       <main className="w-full">
         <Hero />
         <CoreTruth />
-        <Timeline />
+        {/* <Timeline /> */}
         <PhotoGallery />
         <BigEvent />
         <MapSection />
