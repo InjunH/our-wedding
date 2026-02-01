@@ -27,7 +27,13 @@ interface MemoryTimelineProps {
 const TIMELINE_START = new Date(2023, 3, 1);
 
 const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestbookEntries }) => {
-  const { photos: historyPhotos } = useS3Photos('history/', true);
+  const {
+    photos: historyPhotos,
+    loading: photosLoading,
+    loadingMore,
+    hasMore,
+    loadMore
+  } = useS3Photos('history/', true);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   const [exifDates, setExifDates] = useState<Map<string, Date | null>>(new Map());
@@ -409,6 +415,26 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
               </div>
             </div>
           </div>
+
+          {/* 더보기 버튼 */}
+          {hasMore && (
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={loadMore}
+                disabled={loadingMore}
+                className="px-6 py-3 bg-gold/90 text-white rounded-lg hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed transition-all serif-kr shadow-lg"
+              >
+                {loadingMore ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>추억 불러오는 중...</span>
+                  </div>
+                ) : (
+                  <span>더 많은 추억 보기 ({historyPhotos.length}장 로드됨)</span>
+                )}
+              </button>
+            </div>
+          )}
         </div>
       </motion.div>
     </AnimatePresence>

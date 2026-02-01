@@ -9,6 +9,19 @@ export interface S3Object {
   url: string;
 }
 
+export interface S3ListOptions {
+  prefix?: string;
+  thumbnailsOnly?: boolean;
+  maxKeys?: number;
+  marker?: string;
+}
+
+export interface S3ListResult {
+  objects: S3Object[];
+  isTruncated: boolean;
+  nextMarker?: string;
+}
+
 const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.heic'];
 
 function isImageFile(key: string): boolean {
@@ -17,12 +30,25 @@ function isImageFile(key: string): boolean {
 }
 
 export async function listS3Objects(
-  prefix?: string,
-  thumbnailsOnly: boolean = false
-): Promise<S3Object[]> {
-  const url = prefix ? `${BUCKET_URL}?prefix=${encodeURIComponent(prefix)}` : BUCKET_URL;
-  const response = await fetch(url);
+  options: S3ListOptions = {}
+): Promise<S3ListResult> {
+  const {
+    prefix = '',
+    thumbnailsOnly = false,
+    maxKeys = 1000,
+    marker = undefined
+  } = options;
 
+  // URL 구성
+  let url = `${BUCKET_URL}?prefix=${encodeURIComponent(prefix)}`;
+  if (maxKeys) {
+    url += `&max-keys=${maxKeys}`;
+  }
+  if (marker) {
+    url += `&marker=${encodeURIComponent(marker)}`;
+  }
+
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch S3 bucket: ${response.statusText}`);
   }
@@ -30,6 +56,12 @@ export async function listS3Objects(
   const xmlText = await response.text();
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+  // 페이지네이션 정보 추출
+  const isTruncated =
+    xmlDoc.getElementsByTagName('IsTruncated')[0]?.textContent === 'true';
+  const nextMarker =
+    xmlDoc.getElementsByTagName('NextMarker')[0]?.textContent || undefined;
 
   const contents = xmlDoc.getElementsByTagName('Contents');
   const objects: S3Object[] = [];
@@ -59,10 +91,17 @@ export async function listS3Objects(
     }
   }
 
-  return objects.sort(
+  // 정렬: 최신순
+  const sortedObjects = objects.sort(
     (a, b) =>
       new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
   );
+
+  return {
+    objects: sortedObjects,
+    isTruncated,
+    nextMarker
+  };
 }
 
 export function getImageUrl(key: string): string {

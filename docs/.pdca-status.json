@@ -1,0 +1,136 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-02-01T07:06:29.936Z",
+  "activeFeatures": [
+    "our-wedding"
+  ],
+  "primaryFeature": "our-wedding",
+  "features": {
+    "our-wedding": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-01T06:10:32.661Z",
+        "lastUpdated": "2026-02-01T07:05:24.724Z"
+      }
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-01-28T09:33:34.743Z",
+    "onboardingCompleted": false,
+    "lastActivity": "2026-02-01T07:06:29.936Z"
+  },
+  "history": [
+    {
+      "timestamp": "2026-02-01T06:10:32.661Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:10:37.662Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:10:38.735Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:11:07.446Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:11:08.827Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:11:09.998Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:11:48.436Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:11:54.675Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:11:56.782Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:12:25.037Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:27:44.410Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T06:30:13.271Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T07:03:18.548Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T07:03:36.828Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T07:04:11.636Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T07:05:11.452Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-01T07:05:24.724Z",
+      "feature": "our-wedding",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}
