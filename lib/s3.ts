@@ -16,7 +16,10 @@ function isImageFile(key: string): boolean {
   return IMAGE_EXTENSIONS.some((ext) => lowerKey.endsWith(ext));
 }
 
-export async function listS3Objects(prefix?: string): Promise<S3Object[]> {
+export async function listS3Objects(
+  prefix?: string,
+  thumbnailsOnly: boolean = false
+): Promise<S3Object[]> {
   const url = prefix ? `${BUCKET_URL}?prefix=${encodeURIComponent(prefix)}` : BUCKET_URL;
   const response = await fetch(url);
 
@@ -42,6 +45,11 @@ export async function listS3Objects(prefix?: string): Promise<S3Object[]> {
     );
 
     if (key && isImageFile(key)) {
+      // 썸네일만 필터링
+      if (thumbnailsOnly && !key.includes('/thumb/')) {
+        continue;
+      }
+
       objects.push({
         key,
         lastModified,
@@ -59,4 +67,23 @@ export async function listS3Objects(prefix?: string): Promise<S3Object[]> {
 
 export function getImageUrl(key: string): string {
   return `${BUCKET_URL}/${encodeURIComponent(key)}`;
+}
+
+/**
+ * 썸네일 URL에서 원본 URL 도출
+ * history/2024-04/thumb/photo.jpg → history/2024-04/photo.jpg
+ * 인코딩된 URL도 처리: %2Fthumb%2F → %2F
+ */
+export function getThumbnailOriginalUrl(thumbnailUrl: string): string {
+  // 인코딩된 경로와 일반 경로 모두 처리
+  return thumbnailUrl
+    .replace('%2Fthumb%2F', '%2F')  // 인코딩된 경로
+    .replace('/thumb/', '/');        // 일반 경로 (fallback)
+}
+
+/**
+ * URL이 썸네일인지 확인
+ */
+export function isThumbnailUrl(url: string): boolean {
+  return url.includes('/thumb/');
 }

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import { useS3Photos } from '../hooks/useS3Photos';
 import { GuestBookEntry } from '../types';
-import { S3Object } from '../lib/s3';
+import { S3Object, getThumbnailOriginalUrl } from '../lib/s3';
 import { getImageDateTaken } from '../lib/exif-utils';
 
 interface TimelineItem {
@@ -27,11 +27,34 @@ interface MemoryTimelineProps {
 const TIMELINE_START = new Date(2023, 3, 1);
 
 const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestbookEntries }) => {
-  const { photos: historyPhotos } = useS3Photos('history/');
+  const { photos: historyPhotos } = useS3Photos('history/', true);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   const [exifDates, setExifDates] = useState<Map<string, Date | null>>(new Map());
+  const [originalUrls, setOriginalUrls] = useState<Map<string, string>>(new Map());
   const timelineBarRef = useRef<HTMLDivElement>(null);
+
+  // 썸네일 URL에서 원본 URL 도출
+  const getOriginalUrl = useCallback((thumbnailUrl: string): string => {
+    // 캐시 확인
+    if (originalUrls.has(thumbnailUrl)) {
+      return originalUrls.get(thumbnailUrl)!;
+    }
+
+    // 썸네일 URL에서 원본 URL 도출
+    const originalUrl = getThumbnailOriginalUrl(thumbnailUrl);
+
+    console.log('🔍 URL 변환:', {
+      썸네일: thumbnailUrl,
+      원본: originalUrl,
+      변환됨: thumbnailUrl !== originalUrl
+    });
+
+    // 캐시 저장 (재계산 방지)
+    setOriginalUrls(prev => new Map(prev).set(thumbnailUrl, originalUrl));
+
+    return originalUrl;
+  }, [originalUrls]);
 
   const handleImageError = (id: string) => {
     setFailedImages(prev => new Set(prev).add(id));
@@ -240,7 +263,7 @@ const MemoryTimeline: React.FC<MemoryTimelineProps> = ({ isOpen, onClose, guestb
             >
               <div className="relative">
                 <img
-                  src={currentItem.url}
+                  src={getOriginalUrl(currentItem.url)}
                   alt="추억"
                   className="max-h-[60vh] w-auto mx-auto object-contain rounded-sm"
                   onError={() => handleImageError(currentItem.id)}

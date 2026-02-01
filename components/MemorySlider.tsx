@@ -23,7 +23,7 @@ interface MemorySliderProps {
 }
 
 const MemorySlider: React.FC<MemorySliderProps> = ({ guestbookEntries, onOpenTimeline }) => {
-  const { photos: historyPhotos } = useS3Photos('history/');
+  const { photos: historyPhotos } = useS3Photos('history/', true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   const [exifDates, setExifDates] = useState<Map<string, Date | null>>(new Map());
