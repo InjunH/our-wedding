@@ -47,3 +47,4 @@
 - **주요 심볼:** `S3Client`, `execSync`, `exiftool`, `magick`
 
 test message
+another test message
