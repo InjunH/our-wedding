@@ -93,7 +93,7 @@ const PhotoGallery: React.FC = () => {
   }, [selectedPhoto, closeModal, goToPrevious, goToNext]);
 
   return (
-    <section className="py-32 px-6 md:px-20 bg-ivory">
+    <section className="py-16 md:py-24 lg:py-32 px-6 md:px-20 bg-ivory">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -104,7 +104,7 @@ const PhotoGallery: React.FC = () => {
           <span className="text-gold text-[10px] font-bold tracking-[0.7em] mb-6 uppercase block">
             Gallery
           </span>
-          <h2 className="text-[#2a2a2a] text-4xl md:text-6xl font-light serif-en tracking-tight-serif italic">
+          <h2 className="text-[#2a2a2a] text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light serif-en tracking-tight-serif italic">
             Our Moments
           </h2>
         </motion.div>

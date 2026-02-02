@@ -25,34 +25,34 @@ const BigEvent: React.FC = () => {
   }, []);
 
   return (
-    <section id="big-event" className="py-60 px-6 md:px-20 bg-white relative overflow-hidden">
+    <section id="big-event" className="py-20 md:py-40 lg:py-60 px-6 md:px-20 bg-white relative overflow-hidden">
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center mb-32">
+        <div className="text-center mb-16 md:mb-32">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-light serif-kr tracking-tight-serif mb-6"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-light serif-kr tracking-tight-serif mb-6"
           >
             결혼합니다
           </motion.h2>
           <div className="h-px w-20 bg-gold mx-auto mt-10"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-stretch">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="flex flex-col justify-center space-y-16"
+            className="flex flex-col justify-center space-y-8 md:space-y-16"
           >
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-4 gap-3 md:gap-6">
               {[
                 { label: '일', value: timeLeft.days },
                 { label: '시간', value: timeLeft.hours },
                 { label: '분', value: timeLeft.mins },
                 { label: '초', value: timeLeft.secs },
               ].map(unit => (
-                <div key={unit.label} className="text-center py-6 border-b border-[#f2f0ea]">
-                  <span className="text-4xl font-light serif-en italic text-gold">{unit.value}</span>
+                <div key={unit.label} className="text-center py-3 md:py-6 border-b border-[#f2f0ea]">
+                  <span className="text-2xl md:text-4xl font-light serif-en italic text-gold">{unit.value}</span>
                   <span className="text-sm text-stone-400 ml-1">{unit.label}</span>
                 </div>
               ))}
@@ -67,26 +67,26 @@ const BigEvent: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="bg-ivory p-12 md:p-20 border border-[#f2f0ea] relative"
+            className="bg-ivory p-6 md:p-12 lg:p-20 border border-[#f2f0ea] relative"
           >
-            <div className="space-y-16">
-              <div className="flex items-start gap-8">
+            <div className="space-y-8 md:space-y-16">
+              <div className="flex items-start gap-4 md:gap-8">
                 <Calendar className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">일시</h4>
-                  <p className="text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">2026년 5월 24일 일요일</p>
+                  <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">2026년 5월 24일 일요일</p>
                   <p className="text-stone-500 mt-2 flex items-center gap-2 serif-kr text-lg">
                     <Clock size={16} className="text-gold opacity-60" strokeWidth={1} /> 오후 1시 정각
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-8">
+              <div className="flex items-start gap-4 md:gap-8">
                 <MapPin className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">장소</h4>
-                  <p className="text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue1}</p>
-                  <p className="text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue2}</p>
+                  <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue1}</p>
+                  <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue2}</p>
                   <p className="text-stone-400 mt-3 font-normal serif-kr text-lg leading-relaxed">{WEDDING_DATA.venueAddress}</p>
                 </div>
               </div>

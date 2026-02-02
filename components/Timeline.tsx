@@ -22,14 +22,14 @@ const Timeline: React.FC = () => {
           className="flex flex-nowrap h-full items-center"
         >
           {/* Section Introduction */}
-          <div className="w-screen h-full flex flex-col justify-center px-12 md:px-32 shrink-0 bg-white border-r border-[#f2f0ea]">
+          <div className="w-screen h-full flex flex-col justify-center px-6 md:px-12 lg:px-32 shrink-0 bg-white border-r border-[#f2f0ea]">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.2 }}
             >
               <span className="text-gold text-[10px] font-bold tracking-[0.7em] mb-8 uppercase block">우리가 걸어온 길</span>
-              <h2 className="text-[#2a2a2a] text-6xl md:text-8xl font-light serif-kr tracking-tight-serif leading-none mb-12">
+              <h2 className="text-[#2a2a2a] text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-light serif-kr tracking-tight-serif leading-none mb-12">
                 1,100일의 기록
               </h2>
               <div className="h-px w-24 bg-gold mb-12"></div>
@@ -82,7 +82,7 @@ const Timeline: React.FC = () => {
               <div className="text-gold mb-12 flex justify-center opacity-60">
                 <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               </div>
-              <h2 className="text-[#2a2a2a] text-5xl md:text-7xl font-light serif-kr tracking-tight-serif leading-tight">
+              <h2 className="text-[#2a2a2a] text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-light serif-kr tracking-tight-serif leading-tight">
                 이제,<br />
                 <span className="text-gold font-light serif-kr">같은 이름으로</span>
               </h2>

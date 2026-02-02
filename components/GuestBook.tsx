@@ -13,16 +13,16 @@ const GuestBook: React.FC = () => {
   const [showTimeline, setShowTimeline] = useState(false);
 
   return (
-    <section className="py-48 px-6 md:px-12 bg-[#faf9f6]">
+    <section className="py-16 md:py-32 lg:py-48 px-6 md:px-12 bg-[#faf9f6]">
       <div className="max-w-[1800px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-12 md:mb-20"
         >
           <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">함께 만드는 추억</span>
-          <h2 className="text-5xl md:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             함께한 순간을 나눠주세요
           </h2>
           <p className="text-stone-400 serif-kr text-lg leading-relaxed max-w-xl mx-auto">
@@ -54,7 +54,7 @@ const GuestBook: React.FC = () => {
         </AnimatePresence>
 
         {/* PC: 좌우 배치, 모바일: 세로 배치 */}
-        <div className="flex flex-col lg:flex-row lg:gap-12 lg:items-start">
+        <div className="flex flex-col-reverse lg:flex-row lg:gap-12 lg:items-start">
           {/* 폼 (PC: 좌측) - 1 비율 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

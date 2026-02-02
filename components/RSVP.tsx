@@ -51,7 +51,7 @@ const RSVP: React.FC = () => {
         : '미정';
 
     return (
-      <section id="rsvp" className="py-48 px-6 md:px-20 bg-white">
+      <section id="rsvp" className="py-16 md:py-32 lg:py-48 px-6 md:px-20 bg-white">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -95,7 +95,7 @@ const RSVP: React.FC = () => {
   }
 
   return (
-    <section id="rsvp" className="py-48 px-6 md:px-20 bg-white">
+    <section id="rsvp" className="py-16 md:py-32 lg:py-48 px-6 md:px-20 bg-white">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -104,7 +104,7 @@ const RSVP: React.FC = () => {
           className="text-center mb-20"
         >
           <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">RSVP</span>
-          <h2 className="text-5xl md:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             참석 여부
           </h2>
           <p className="text-stone-400 serif-kr text-lg">
@@ -118,7 +118,7 @@ const RSVP: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           onSubmit={handleSubmit}
-          className="bg-[#faf9f6] p-10 md:p-16 border border-[#f2f0ea]"
+          className="bg-[#faf9f6] p-4 md:p-10 lg:p-16 border border-[#f2f0ea]"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">

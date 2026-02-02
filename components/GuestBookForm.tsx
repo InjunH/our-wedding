@@ -87,7 +87,7 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       onSubmit={handleSubmit}
-      className="bg-white p-8 md:p-12 border border-[#f2f0ea] space-y-6"
+      className="bg-white p-4 md:p-8 lg:p-12 border border-[#f2f0ea] space-y-4 md:space-y-6"
     >
       <h3 className="text-xl serif-kr font-normal mb-8 pb-6 border-b border-[#f2f0ea] text-[#2a2a2a]">메시지 작성</h3>
 

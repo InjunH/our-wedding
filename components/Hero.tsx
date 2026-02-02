@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className="text-[10px] font-semibold tracking-[0.6em] text-gold uppercase mb-6 block">우리의 이야기</span>
-          <h1 className="text-5xl md:text-8xl font-light tracking-tight-serif mb-2 serif-en italic text-[#2a2a2a]">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light tracking-tight-serif mb-2 serif-en italic text-[#2a2a2a]">
             Nuri <span className="font-extralight text-stone-300 mx-2">&</span> Injun
           </h1>
           <div className="h-px w-20 bg-gold mx-auto mt-8 opacity-40"></div>

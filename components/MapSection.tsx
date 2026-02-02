@@ -20,22 +20,22 @@ const MapSection: React.FC = () => {
   };
 
   return (
-    <section id="map-section" className="py-48 px-6 md:px-20 bg-[#faf9f6]">
+    <section id="map-section" className="py-16 md:py-32 lg:py-48 px-6 md:px-20 bg-[#faf9f6]">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-12 md:mb-20"
         >
           <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">오시는 길</span>
-          <h2 className="text-4xl md:text-5xl serif-kr font-normal mb-6 text-[#2a2a2a]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             찾아오시는 방법
           </h2>
           <div className="h-px w-20 bg-gold mx-auto opacity-50"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
