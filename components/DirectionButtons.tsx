@@ -56,7 +56,7 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng }) => {
     <div className="space-y-4">
       <div className="flex items-center gap-3 mb-6">
         <Navigation size={18} className="text-gold opacity-60" strokeWidth={1} />
-        <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] text-stone-300">
+        <h4 className="text-xs font-bold uppercase tracking-[0.5em] text-stone-300">
           Navigation
         </h4>
       </div>
@@ -68,11 +68,11 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng }) => {
               whileTap={{ scale: 0.95 }}
               onClick={btn.onClick}
               aria-label={btn.label}
-              className={`${btn.color} ${btn.textColor} w-12 h-12 rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center`}
+              className={`${btn.color} ${btn.textColor} w-12 h-12 rounded-md shadow-lg transition-all duration-300 flex items-center justify-center`}
             >
               {btn.logo}
             </motion.button>
-            <span className="text-[10px] text-stone-400 font-medium tracking-wide">{btn.label}</span>
+            <span className="text-xs text-stone-400 font-medium tracking-wide">{btn.label}</span>
           </div>
         ))}
       </div>

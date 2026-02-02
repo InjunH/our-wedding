@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Check, AlertCircle, User, Phone, Users, Heart, MessageSquare } from 'lucide-react';
+import { Send, Check, AlertCircle, User, Phone, Users, Heart } from 'lucide-react';
 import { useRSVP } from '../hooks/useRSVP';
 import { RSVPFormData } from '../types';
 
@@ -103,7 +103,7 @@ const RSVP: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">RSVP</span>
+          <span className="text-gold text-xs font-bold tracking-[0.7em] uppercase mb-6 block">RSVP</span>
           <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             참석 여부
           </h2>
@@ -121,6 +121,35 @@ const RSVP: React.FC = () => {
           className="bg-[#faf9f6] p-4 md:p-10 lg:p-16 border border-[#f2f0ea]"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-1 md:col-span-2">
+              <label className="label-wedding">
+                <Heart size={14} /> 신랑/신부측
+              </label>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, side: 'groom' }))}
+                  className={`flex-1 py-3 px-4 border rounded-md transition-all serif-kr ${
+                    formData.side === 'groom'
+                      ? 'bg-gold text-white border-gold'
+                      : 'bg-white text-stone-500 border-stone-200 hover:border-gold'
+                  }`}
+                >
+                  신랑측
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, side: 'bride' }))}
+                  className={`flex-1 py-3 px-4 border rounded-md transition-all serif-kr ${
+                    formData.side === 'bride'
+                      ? 'bg-gold text-white border-gold'
+                      : 'bg-white text-stone-500 border-stone-200 hover:border-gold'
+                  }`}
+                >
+                  신부측
+                </button>
+              </div>
+            </div>
             <div className="space-y-2">
               <label className="label-wedding">
                 <User size={14} /> 성함
@@ -182,34 +211,7 @@ const RSVP: React.FC = () => {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="label-wedding">
-                <Heart size={14} /> 신랑/신부측
-              </label>
-              <select
-                name="side"
-                value={formData.side}
-                onChange={handleChange}
-                className="input-wedding"
-              >
-                <option value="groom">신랑측</option>
-                <option value="bride">신부측</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="mt-6 space-y-2">
-            <label className="label-wedding">
-              <MessageSquare size={14} /> 축하 메시지 (선택)
-            </label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              rows={3}
-              placeholder="축하의 말씀을 남겨주세요"
-              className="input-wedding resize-none"
-            />
+            
           </div>
 
           <AnimatePresence>
@@ -231,7 +233,7 @@ const RSVP: React.FC = () => {
             disabled={status === 'submitting'}
             whileHover={{ scale: status === 'submitting' ? 1 : 1.02 }}
             whileTap={{ scale: status === 'submitting' ? 1 : 0.98 }}
-            className="mt-8 w-full btn-gold flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-8 w-full btn-gold rounded-md flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === 'submitting' ? (
               <>

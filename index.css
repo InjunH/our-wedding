@@ -10,13 +10,13 @@
   }
 
   .label-wedding {
-    @apply flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5em] text-stone-300 mb-4;
+    @apply flex items-center gap-2 text-xs font-bold uppercase tracking-[0.5em] text-stone-300 mb-4;
   }
 
   .btn-gold {
-    @apply py-5 px-6 bg-[#2a2a2a] text-white
-           font-bold text-[10px] uppercase tracking-[0.5em]
-           hover:bg-gold transition-all duration-500;
+    @apply py-5 px-6 bg-transparent text-gold border border-gold rounded-md
+           font-bold text-xs uppercase tracking-[0.5em]
+           hover:bg-gold hover:text-white transition-all duration-500;
   }
 
   .serif-kr {
