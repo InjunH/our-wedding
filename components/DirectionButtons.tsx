@@ -16,9 +16,6 @@ const NaverLogo = () => (
   <img src="/naver.png" alt="네이버지도" className="w-full h-full object-cover rounded-lg" />
 );
 
-const TMapLogo = () => (
-  <img src="/tmap.jpeg" alt="티맵" className="w-full h-full object-cover rounded-lg" />
-);
 
 const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -39,17 +36,11 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng }) => {
     );
   };
 
-  const openTMap = () => {
-    window.open(
-      `https://tmap.life/${lat},${lng}`,
-      '_blank'
-    );
-  };
+  
 
   const buttons = [
     { label: '카카오맵', onClick: openKakaoMap, color: 'bg-[#FEE500]', textColor: 'text-[#3C1E1E]', logo: <KakaoLogo /> },
-    { label: '네이버지도', onClick: openNaverMap, color: 'bg-[#03C75A]', textColor: 'text-white', logo: <NaverLogo /> },
-    ...(isMobile ? [{ label: '티맵', onClick: openTMap, color: 'bg-[#1C6DD0]', textColor: 'text-white', logo: <TMapLogo /> }] : []),
+    { label: '네이버지도', onClick: openNaverMap, color: 'bg-[#03C75A]', textColor: 'text-white', logo: <NaverLogo /> }
   ];
 
   return (

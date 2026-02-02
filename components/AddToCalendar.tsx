@@ -19,7 +19,7 @@ const AddToCalendar: React.FC = () => {
     <TooltipProvider delayDuration={300}>
       <div className="flex flex-col items-center gap-3">
         <span className="text-xs uppercase tracking-[0.3em] text-stone-400 font-bold">
-          캘린더에 추가
+          캘린더에 추가하기
         </span>
         <div className="flex justify-center gap-3">
           {/* Apple Calendar (ICS Download) */}

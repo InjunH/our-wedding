@@ -71,7 +71,7 @@ const BigEvent: React.FC = () => {
           >
             <div className="space-y-8 md:space-y-16">
               <div className="flex items-start gap-4 md:gap-8">
-                <Calendar className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
+                <Calendar className="text-gold shrink-0 opacity-60" size={24} strokeWidth={1} />
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">일시</h4>
                   <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">2026년 5월 24일 일요일</p>
@@ -82,7 +82,7 @@ const BigEvent: React.FC = () => {
               </div>
 
               <div className="flex items-start gap-4 md:gap-8">
-                <MapPin className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
+                <MapPin className="text-gold shrink-0 opacity-60" size={24} strokeWidth={1} />
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">장소</h4>
                   <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue1}</p>
