@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import Hero from './components/Hero';
@@ -8,9 +8,11 @@ import Timeline from './components/Timeline';
 import PhotoGallery from './components/PhotoGallery';
 import BigEvent from './components/BigEvent';
 import MapSection from './components/MapSection';
-import RSVP from './components/RSVP';
-import GuestBook from './components/GuestBook';
 import Footer from './components/Footer';
+
+// Lazy load Firebase-dependent components
+const RSVP = React.lazy(() => import('./components/RSVP'));
+const GuestBook = React.lazy(() => import('./components/GuestBook'));
 
 const App: React.FC = () => {
   const { scrollYProgress } = useScroll();
@@ -36,8 +38,10 @@ const App: React.FC = () => {
         <PhotoGallery />
         <BigEvent />
         <MapSection />
-        <RSVP />
-        <GuestBook />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <RSVP />
+          <GuestBook />
+        </Suspense>
         <Footer />
       </main>
 
@@ -51,7 +55,7 @@ const App: React.FC = () => {
             shimmerColor="#c5a059"
             background="rgba(255, 255, 255, 1)"
             borderRadius="12px"
-            className="px-12 py-4 text-[10px] font-bold tracking-[0.3em] shadow-2xl text-[#333]"
+            className="px-12 py-4 text-[14px] font-bold tracking-[0.3em] shadow-2xl text-[#333]"
             onClick={() => {
               const el = document.getElementById('rsvp');
               el?.scrollIntoView({ behavior: 'smooth' });
