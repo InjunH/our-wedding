@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 export const HeroGallery = ({
   animationDelay = 0.5,
@@ -11,6 +11,7 @@ export const HeroGallery = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // First make the container visible with a fade-in
@@ -68,66 +69,75 @@ export const HeroGallery = ({
     }),
   };
 
-  // Photo positions - horizontal layout with random y offsets
+  // Photo size based on screen size
+  const photoSize = isMobile ? 140 : 220;
+
+  // Photo positions
+  // Desktop: horizontal layout with random y offsets
+  // Mobile: 2 rows (top 3, bottom 2)
   const photos = [
     {
       id: 1,
       order: 0,
-      x: "-320px",
-      y: "15px",
+      x: isMobile ? "-85px" : "-320px",
+      y: isMobile ? "0px" : "15px",
       zIndex: 50,
       direction: "left" as Direction,
-      
-      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/2CC3E1B3-88CA-47F3-97BC-9A4D2B96D888.png",
+      rotation: -4,
+      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/2CC3E1B3-88CA-47F3-97BC-9A4D2B96D888.webp",
     },
     {
       id: 2,
       order: 1,
-      x: "-160px",
-      y: "32px",
+      x: isMobile ? "0px" : "-160px",
+      y: isMobile ? "10px" : "32px",
       zIndex: 40,
-      direction: "left" as Direction,
-      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/8DA8EF17-0163-436B-B2B1-F280C62A7B07.png",
+      direction: "right" as Direction,
+      rotation: 2,
+      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/8DA8EF17-0163-436B-B2B1-F280C62A7B07.webp",
     },
     {
       id: 3,
       order: 2,
-      x: "0px",
-      y: "8px",
+      x: isMobile ? "85px" : "0px",
+      y: isMobile ? "5px" : "8px",
       zIndex: 30,
-      direction: "right" as Direction,
-      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/96D6A27E-3B75-4FA5-BEC9-A8FECE8263F6.png",
+      direction: "left" as Direction,
+      rotation: -3,
+      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/96D6A27E-3B75-4FA5-BEC9-A8FECE8263F6.webp",
     },
     {
       id: 4,
       order: 3,
-      x: "160px",
-      y: "22px",
+      x: isMobile ? "-42px" : "160px",
+      y: isMobile ? "90px" : "22px",
       zIndex: 20,
       direction: "right" as Direction,
-      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/B06D73C4-800C-4788-B07B-00BCEB7F002C.png",
+      rotation: 5,
+      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/B06D73C4-800C-4788-B07B-00BCEB7F002C.webp",
     },
     {
       id: 5,
       order: 4,
-      x: "320px",
-      y: "44px",
+      x: isMobile ? "42px" : "320px",
+      y: isMobile ? "95px" : "44px",
       zIndex: 10,
       direction: "left" as Direction,
-      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/55653FFC-F260-40F5-B96D-372CD6E2FE2C.png",
+      rotation: -2,
+      src: "https://nuri-injun-wedding-card.s3.ap-northeast-2.amazonaws.com/55653FFC-F260-40F5-B96D-372CD6E2FE2C.webp",
     },
   ];
 
   return (
-    <div className="mt-40 relative">
+    <div className="mt-20 md:mt-40 relative">
        <div className="absolute inset-0 max-md:hidden top-[200px] -z-10 h-[300px] w-full bg-transparent bg-[linear-gradient(to_right,#c4a052_1px,transparent_1px),linear-gradient(to_bottom,#c4a052_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
       <p className="text-[10px] font-bold tracking-[0.5em] text-gold uppercase mb-4 text-center">
         Our Moments
       </p>
-      <h3 className="text-4xl md:text-6xl font-light serif-en italic tracking-tight-serif text-[#2a2a2a] text-center">
+      <h3 className="text-3xl md:text-6xl font-light serif-en italic tracking-tight-serif text-[#2a2a2a] text-center">
         A Journey Together
       </h3>
-      <div className="relative mb-8 h-[350px] w-full items-center justify-center lg:flex">
+      <div className="relative mt-14 md:mt-12 mb-8 h-[280px] md:h-[350px] w-full items-center justify-center lg:flex">
         <motion.div
           className="relative mx-auto flex w-full max-w-7xl justify-center"
           initial={{ opacity: 0 }}
@@ -140,7 +150,7 @@ export const HeroGallery = ({
             initial="hidden"
             animate={isLoaded ? "visible" : "hidden"}
           >
-            <div className="relative h-[220px] w-[220px]">
+            <div className="relative" style={{ height: photoSize, width: photoSize }}>
               {/* Render photos in reverse order so that higher z-index photos are rendered later in the DOM */}
               {[...photos].reverse().map((photo) => (
                 <motion.div
@@ -155,11 +165,12 @@ export const HeroGallery = ({
                   }}
                 >
                   <HeroPhoto
-                    width={220}
-                    height={220}
+                    width={photoSize}
+                    height={photoSize}
                     src={photo.src}
                     alt="Family photo"
                     direction={photo.direction}
+                    rotation={photo.rotation}
                   />
                 </motion.div>
               ))}
@@ -172,13 +183,6 @@ export const HeroGallery = ({
   );
 };
 
-function getRandomNumberInRange(min: number, max: number): number {
-  if (min >= max) {
-    throw new Error("Min value should be less than max value");
-  }
-  return Math.random() * (max - min) + min;
-}
-
 type Direction = "left" | "right";
 
 export const HeroPhoto = ({
@@ -188,6 +192,7 @@ export const HeroPhoto = ({
   direction,
   width,
   height,
+  rotation = 0,
 }: {
   src: string;
   alt: string;
@@ -195,16 +200,10 @@ export const HeroPhoto = ({
   direction?: Direction;
   width: number;
   height: number;
+  rotation?: number;
 }) => {
-  const [rotation, setRotation] = useState<number>(0);
   const x = useMotionValue(200);
   const y = useMotionValue(200);
-
-  useEffect(() => {
-    const randomRotation =
-      getRandomNumberInRange(1, 4) * (direction === "left" ? -1 : 1);
-    setRotation(randomRotation);
-  }, [direction]);
 
   function handleMouse(event: {
     currentTarget: { getBoundingClientRect: () => DOMRect };
@@ -257,12 +256,14 @@ export const HeroPhoto = ({
       draggable={false}
       tabIndex={0}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-3xl shadow-sm">
+      <div className="relative h-full w-full overflow-hidden rounded-3xl shadow-sm bg-stone-100">
         <motion.img
           className={cn("rounded-3xl object-cover w-full h-full")}
           src={src}
           alt={alt}
           draggable={false}
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </motion.div>
