@@ -28,7 +28,7 @@ const Timeline: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.2 }}
             >
-              <span className="text-gold text-[10px] font-bold tracking-[0.7em] mb-8 uppercase block">우리가 걸어온 길</span>
+              <span className="text-gold text-xs font-bold tracking-[0.7em] mb-8 uppercase block">우리가 걸어온 길</span>
               <h2 className="text-[#2a2a2a] text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-light serif-kr tracking-tight-serif leading-none mb-12">
                 1,100일의 기록
               </h2>

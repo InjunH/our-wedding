@@ -18,7 +18,7 @@ const AddToCalendar: React.FC = () => {
   return (
     <TooltipProvider delayDuration={300}>
       <div className="flex flex-col items-center gap-3">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-stone-400 font-bold">
+        <span className="text-xs uppercase tracking-[0.3em] text-stone-400 font-bold">
           캘린더에 추가
         </span>
         <div className="flex justify-center gap-3">

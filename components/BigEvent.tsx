@@ -73,7 +73,7 @@ const BigEvent: React.FC = () => {
               <div className="flex items-start gap-4 md:gap-8">
                 <Calendar className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">일시</h4>
+                  <h4 className="text-xs font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">일시</h4>
                   <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">2026년 5월 24일 일요일</p>
                   <p className="text-stone-500 mt-2 flex items-center gap-2 serif-kr text-lg">
                     <Clock size={16} className="text-gold opacity-60" strokeWidth={1} /> 오후 1시 정각
@@ -84,7 +84,7 @@ const BigEvent: React.FC = () => {
               <div className="flex items-start gap-4 md:gap-8">
                 <MapPin className="text-gold shrink-0 mt-1 opacity-60" size={24} strokeWidth={1} />
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">장소</h4>
+                  <h4 className="text-xs font-bold uppercase tracking-[0.5em] mb-4 text-stone-300">장소</h4>
                   <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue1}</p>
                   <p className="text-xl md:text-3xl serif-kr font-medium tracking-tight-serif text-[#2a2a2a]">{WEDDING_DATA.venue2}</p>
                   <p className="text-stone-400 mt-3 font-normal serif-kr text-lg leading-relaxed">{WEDDING_DATA.venueAddress}</p>
@@ -93,15 +93,6 @@ const BigEvent: React.FC = () => {
 
               <div className="pt-10 space-y-6">
                 <AddToCalendar />
-                <button
-                  className="w-full py-6 bg-[#2a2a2a] text-white font-bold text-[10px] uppercase tracking-[0.6em] flex items-center justify-center gap-4 group hover:bg-gold transition-all duration-700"
-                  onClick={() => {
-                    const el = document.getElementById('map-section');
-                    el?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  지도 보기 <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </button>
               </div>
             </div>
           </motion.div>

@@ -131,7 +131,7 @@ export const HeroGallery = ({
   return (
     <div className="mt-20 md:mt-40 relative">
        <div className="absolute inset-0 max-md:hidden top-[200px] -z-10 h-[300px] w-full bg-transparent bg-[linear-gradient(to_right,#c4a052_1px,transparent_1px),linear-gradient(to_bottom,#c4a052_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-      <p className="text-[10px] font-bold tracking-[0.5em] text-gold uppercase mb-4 text-center">
+      <p className="text-xs font-bold tracking-[0.5em] text-gold uppercase mb-4 text-center">
         Our Moments
       </p>
       <h3 className="text-3xl md:text-6xl font-light serif-en italic tracking-tight-serif text-[#2a2a2a] text-center">

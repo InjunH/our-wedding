@@ -21,7 +21,7 @@ const GuestBook: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-20"
         >
-          <span className="text-gold text-[10px] font-bold tracking-[0.7em] uppercase mb-6 block">함께 만드는 추억</span>
+          <span className="text-gold text-xs font-bold tracking-[0.7em] uppercase mb-6 block">함께 만드는 추억</span>
           <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
             함께한 순간을 나눠주세요
           </h2>

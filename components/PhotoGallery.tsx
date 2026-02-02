@@ -101,7 +101,7 @@ const PhotoGallery: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-gold text-[10px] font-bold tracking-[0.7em] mb-6 uppercase block">
+          <span className="text-gold text-xs font-bold tracking-[0.7em] mb-6 uppercase block">
             Gallery
           </span>
           <h2 className="text-[#2a2a2a] text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light serif-en tracking-tight-serif italic">
@@ -149,17 +149,6 @@ const PhotoGallery: React.FC = () => {
           </div>
         )}
 
-        {!loading && !error && photos.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-center mt-12"
-          >
-            <span className="text-stone-400 text-sm serif-kr">
-              총 {photos.length}장의 사진
-            </span>
-          </motion.div>
-        )}
       </div>
 
       {/* Photo Modal */}
