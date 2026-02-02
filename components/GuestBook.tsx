@@ -53,25 +53,28 @@ const GuestBook: React.FC = () => {
           )}
         </AnimatePresence>
 
-        {/* 메시지 목록 (상단) */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <GuestBookList entries={entries} loading={loading} />
-        </motion.div>
+        {/* PC: 좌우 배치, 모바일: 세로 배치 */}
+        <div className="flex flex-col lg:flex-row lg:gap-12 lg:items-start">
+          {/* 폼 (PC: 좌측) - 1 비율 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16 lg:mb-0 lg:flex-[1] lg:sticky lg:top-24"
+          >
+            <GuestBookForm onSubmit={addEntry} submitting={submitting} />
+          </motion.div>
 
-        {/* 폼 (하단, 중앙 정렬) */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-lg mx-auto"
-        >
-          <GuestBookForm onSubmit={addEntry} submitting={submitting} />
-        </motion.div>
+          {/* 메시지 목록 (PC: 우측) - 1.5 비율 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="lg:flex-[1.5]"
+          >
+            <GuestBookList entries={entries} loading={loading} />
+          </motion.div>
+        </div>
       </div>
 
       {/* 타임라인 모달 */}
