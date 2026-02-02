@@ -60,7 +60,7 @@ const DirectionButtons: React.FC<DirectionButtonsProps> = ({ lat, lng }) => {
           Navigation
         </h4>
       </div>
-      <div className="flex gap-6">
+      <div className="flex gap-6 pl-[40px]">
         {buttons.map((btn) => (
           <div key={btn.label} className="flex flex-col items-center gap-2">
             <motion.button
