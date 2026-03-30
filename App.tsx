@@ -1,10 +1,11 @@
 
-import React, { Suspense } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import React, { Suspense, useState, useEffect } from 'react';
+import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import Hero from './components/Hero';
 import CoreTruth from './components/CoreTruth';
-import Timeline from './components/Timeline';
+import PhotoDivider from './components/PhotoDivider';
+import StudioGallery from './components/StudioGallery';
 import PhotoGallery from './components/PhotoGallery';
 import BigEvent from './components/BigEvent';
 import MapSection from './components/MapSection';
@@ -22,19 +23,27 @@ const App: React.FC = () => {
     restDelta: 0.001
   });
 
+  // Show/hide CTA based on scroll position
+  const [showCTA, setShowCTA] = useState(false);
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    // Show after scrolling past hero (>10%), hide near RSVP section (>85%)
+    setShowCTA(latest > 0.1 && latest < 0.85);
+  });
+
   return (
     <div className="relative bg-[#faf9f6] text-[#333] selection:bg-[#e5d5b7] selection:text-[#333]">
-      {/* Delicate Progress Bar */}
+      {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-[#c5a059] z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-[#c5a059] z-50 origin-left"
         style={{ scaleX }}
       />
 
-      {/* Note: overflow-x-hidden removed from main as it breaks sticky children */}
       <main className="w-full">
         <Hero />
         <CoreTruth />
-        {/* <Timeline /> */}
+        <PhotoDivider src="/studio/KSJ02613-1_divider.webp" alt="Studio portrait" />
+        <StudioGallery />
+        <PhotoDivider src="/studio/KSJ02546_divider.webp" alt="Studio portrait" />
         <PhotoGallery />
         <BigEvent />
         <MapSection />
@@ -45,8 +54,17 @@ const App: React.FC = () => {
         <Footer />
       </main>
 
-      {/* Elegant RSVP Button */}
-      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-40">
+      {/* RSVP CTA - scroll aware */}
+      <motion.div
+        className="fixed bottom-10 left-1/2 -translate-x-1/2 z-40"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: showCTA ? 1 : 0,
+          y: showCTA ? 0 : 20,
+          pointerEvents: showCTA ? 'auto' : 'none',
+        }}
+        transition={{ duration: 0.3 }}
+      >
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -64,7 +82,7 @@ const App: React.FC = () => {
             참석 의사 전달하기
           </ShimmerButton>
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -102,10 +102,10 @@ const PhotoGallery: React.FC = () => {
           className="text-center mb-16"
         >
           <span className="text-gold text-xs font-bold tracking-[0.7em] mb-6 uppercase block">
-            Gallery
+            Memory
           </span>
-          <h2 className="text-[#2a2a2a] text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light serif-en tracking-tight-serif italic">
-            Our Moments
+          <h2 className="text-[#2a2a2a] text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light serif-kr tracking-tight-serif">
+            우리의 순간들
           </h2>
         </motion.div>
 
@@ -128,20 +128,21 @@ const PhotoGallery: React.FC = () => {
         )}
 
         {!loading && !error && photos.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4">
             {photos.map((photo, index) => (
               <motion.div
                 key={photo.key}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="relative aspect-square overflow-hidden rounded-sm bg-white p-2 shadow-[0_10px_30px_rgba(0,0,0,0.04)] group cursor-pointer"
+                viewport={{ once: true, margin: '-5%' }}
+                transition={{ duration: 0.5, delay: (index % 4) * 0.05 }}
+                className="mb-3 md:mb-4 break-inside-avoid overflow-hidden bg-white p-2 shadow-[0_10px_30px_rgba(0,0,0,0.04)] group cursor-pointer"
                 onClick={() => openModal(photo, index)}
               >
                 <img
                   src={photo.url}
                   alt={photo.key}
-                  className="w-full h-full object-cover rounded-sm transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-auto block transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
               </motion.div>
