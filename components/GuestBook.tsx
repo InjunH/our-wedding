@@ -21,23 +21,16 @@ const GuestBook: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-20"
         >
-          <span className="text-gold text-xs font-bold tracking-[0.7em] uppercase mb-6 block">함께 만드는 추억</span>
+          <span className="text-gold text-xs font-bold tracking-[0.7em] uppercase mb-6 block">축하의 한마디</span>
           <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl serif-kr font-normal mb-6 text-[#2a2a2a]">
-            함께한 순간을 나눠주세요
+            결혼식 사진을 함께 나눠요
           </h2>
           <p className="text-stone-400 serif-kr text-lg leading-relaxed max-w-xl mx-auto">
-            핸드폰 문제로 예전 사진들을 많이 잃어버렸습니다.<br />
-            가족, 친구, 회사 동료분들께서 누리, 인준과 함께 찍은 사진이 있다면<br />
-            공유해 주세요. 여러분의 사진으로 우리의 타임라인을 채우고 싶습니다.
+            결혼식 당일 찍은 사진이 있다면 공유해 주세요.<br />
+            여러분의 시선으로 담긴 순간들이 우리에게 가장 소중한 선물입니다.
           </p>
           <div className="h-px w-20 bg-gold mx-auto mt-10 opacity-50"></div>
         </motion.div>
-
-        {/* 추억 슬라이더 */}
-        <MemorySlider
-          guestbookEntries={entries}
-          onOpenTimeline={() => setShowTimeline(true)}
-        />
 
         <AnimatePresence>
           {error && (
@@ -75,6 +68,12 @@ const GuestBook: React.FC = () => {
             <GuestBookList entries={entries} loading={loading} />
           </motion.div>
         </div>
+
+        {/* 추억 슬라이더 */}
+        <MemorySlider
+          guestbookEntries={entries}
+          onOpenTimeline={() => setShowTimeline(true)}
+        />
       </div>
 
       {/* 타임라인 모달 */}

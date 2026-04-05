@@ -44,14 +44,16 @@ const App: React.FC = () => {
         <PhotoDivider src="/studio/KSJ02613-1_divider.webp" alt="Studio portrait" />
         <StudioGallery />
         <PhotoDivider src="/studio/KSJ02546_divider.webp" alt="Studio portrait" />
-        <PhotoGallery />
         <BigEvent />
         <MapSection />
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <RSVP />
-          <GuestBook />
         </Suspense>
         <Footer />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <GuestBook />
+        </Suspense>
+        <PhotoGallery />
       </main>
 
       {/* RSVP CTA - mobile: bottom center, PC: bottom-right with pulse */}
