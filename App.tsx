@@ -56,7 +56,7 @@ const App: React.FC = () => {
 
       {/* RSVP CTA - mobile: bottom center, PC: bottom-right with pulse */}
       <motion.div
-        className="fixed z-40 bottom-8 inset-x-0 flex justify-center md:justify-end md:right-8 md:bottom-10 md:inset-x-auto"
+        className="fixed z-40 bottom-8 inset-x-0 flex justify-center md:bottom-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{
           opacity: showCTA ? 1 : 0,
@@ -65,15 +65,14 @@ const App: React.FC = () => {
         }}
         transition={{ duration: 0.3 }}
       >
-        {/* PC: pulse ring behind button */}
-        <div className="hidden md:block absolute inset-0 -m-1 rounded-2xl animate-pulse bg-gold/20" />
-        <div className="hidden md:block absolute inset-0 -m-2 rounded-2xl animate-ping bg-gold/10" style={{ animationDuration: '2s' }} />
-
         <motion.div
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           className="relative"
         >
+          {/* PC: pulse ring behind button */}
+          <div className="hidden md:block absolute inset-0 -m-1 rounded-2xl animate-pulse bg-gold/20" />
+          <div className="hidden md:block absolute inset-0 -m-2 rounded-2xl animate-ping bg-gold/10" style={{ animationDuration: '2s' }} />
           <ShimmerButton
             shimmerColor="#c5a059"
             shimmerDuration="1.5s"
