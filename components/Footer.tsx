@@ -158,9 +158,9 @@ const Footer: React.FC = () => {
     <>
     <footer className="py-16 md:py-28 lg:py-40 px-6 bg-ivory text-center">
       <div className="max-w-3xl mx-auto space-y-12 md:space-y-20">
-        {/* 감사 메시지 */}
+        {/* 인사 메시지 */}
         <div className="space-y-6">
-          <span className="text-xs font-bold text-gold tracking-[0.7em] uppercase">감사합니다</span>
+          <span className="text-xs font-bold text-gold tracking-[0.7em] uppercase">연락처</span>
           <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light serif-kr tracking-tight-serif text-[#2a2a2a]">
             늘, <span className="text-gold font-extralight">함께.</span>
           </h3>
@@ -168,8 +168,8 @@ const Footer: React.FC = () => {
         </div>
 
         <p className="text-stone-400 font-normal text-xl serif-kr italic leading-[2.2]">
-          좋은 팀이었던 우리,<br />
-          이제 좋은 가족이 되려 합니다.
+          축하의 마음을 전해주시면<br />
+          감사히 간직하겠습니다.
         </p>
 
         {/* 신랑 & 신부 연락처 */}
