@@ -7,9 +7,10 @@ import { uploadToS3, isValidImageFile, MAX_FILE_SIZE } from '../lib/s3-upload';
 interface GuestBookFormProps {
   onSubmit: (data: { name: string; message: string; side?: 'groom' | 'bride' | 'both'; photoUrl?: string }) => Promise<void>;
   submitting: boolean;
+  hideHeader?: boolean;
 }
 
-const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) => {
+const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting, hideHeader }) => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [side, setSide] = useState<'groom' | 'bride' | 'both'>('groom');
@@ -89,7 +90,7 @@ const GuestBookForm: React.FC<GuestBookFormProps> = ({ onSubmit, submitting }) =
       onSubmit={handleSubmit}
       className="bg-white p-4 md:p-8 lg:p-12 border border-[#f2f0ea] space-y-4 md:space-y-6"
     >
-      <h3 className="text-xl serif-kr font-normal mb-8 pb-6 border-b border-[#f2f0ea] text-[#2a2a2a]">메시지 작성</h3>
+      {!hideHeader && <h3 className="text-xl serif-kr font-normal mb-8 pb-6 border-b border-[#f2f0ea] text-[#2a2a2a]">메시지 작성</h3>}
 
       <div className="space-y-2">
         <label className="label-wedding">

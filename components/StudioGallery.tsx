@@ -1,7 +1,8 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { useIsMobile } from '../hooks/useMediaQuery';
 
 // Studio photos: 수정-2 (22) + 원본 (7) = 29
 const STUDIO_PHOTOS = [
@@ -16,8 +17,12 @@ const STUDIO_PHOTOS = [
   'KSJ01515-1', 'KSJ01897-1', 'KSJ02337-1', 'KSJ02477-1',
 ];
 
+const MOBILE_INITIAL_COUNT = 6;
+
 const StudioGallery: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
+  const isMobile = useIsMobile();
 
   const openModal = (index: number) => {
     setSelectedIndex(index);
@@ -71,27 +76,43 @@ const StudioGallery: React.FC = () => {
         </motion.div>
 
         {/* Masonry grid */}
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4">
-          {STUDIO_PHOTOS.map((name, index) => (
-            <motion.div
-              key={name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-5%' }}
-              transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
-              className="mb-3 md:mb-4 break-inside-avoid cursor-pointer group"
-              onClick={() => openModal(index)}
-            >
-              <div className="relative overflow-hidden bg-stone-100">
-                <img
-                  src={`/studio/${name}_thumb.webp`}
-                  alt={`Studio photo ${index + 1}`}
-                  className="w-full h-auto block transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-          ))}
+        <div className="relative">
+          <div className={`columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4${isMobile && !showAll ? ' max-h-[800px] overflow-hidden' : ''}`}>
+            {STUDIO_PHOTOS.map((name, index) => (
+              <motion.div
+                key={name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-5%' }}
+                transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
+                className="mb-3 md:mb-4 break-inside-avoid cursor-pointer group"
+                onClick={() => openModal(index)}
+              >
+                <div className="relative overflow-hidden bg-stone-100">
+                  <img
+                    src={`/studio/${name}_thumb.webp`}
+                    alt={`Studio photo ${index + 1}`}
+                    className="w-full h-auto block transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* 모바일: 그라데이션 오버레이 + 더보기 */}
+          {isMobile && !showAll && (
+            <div className="absolute bottom-0 left-0 right-0 pt-48 pb-6 bg-gradient-to-t from-white from-30% via-white/90 via-60% to-transparent flex flex-col items-center">
+              <button
+                onClick={() => setShowAll(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 border border-gold/30 rounded-full text-sm text-gold bg-white hover:bg-gold/5 transition-colors shadow-sm"
+              >
+                <span className="tracking-wider">사진 더보기</span>
+                <ChevronDown size={16} />
+              </button>
+              <p className="text-xs text-stone-400 mt-2">+{STUDIO_PHOTOS.length - MOBILE_INITIAL_COUNT}장</p>
+            </div>
+          )}
         </div>
       </div>
 

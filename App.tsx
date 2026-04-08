@@ -46,10 +46,10 @@ const App: React.FC = () => {
         <PhotoDivider src="/studio/KSJ02546_divider.webp" alt="Studio portrait" />
         <BigEvent />
         <MapSection />
+        <Footer />
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <RSVP />
         </Suspense>
-        <Footer />
         <Suspense fallback={<div className="min-h-[400px]" />}>
           <GuestBook />
         </Suspense>

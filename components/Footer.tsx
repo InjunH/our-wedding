@@ -11,7 +11,7 @@ const contactData = {
     bank: '신한은행',
     account: '110-276-854237',
     father: { name: '故 황해연', phone: '', deceased: true },
-    mother: { name: '한순영', phone: '010-4178-1411', bank: '국민은행', account: '000-000000-00-000' },
+    mother: { name: '한순영', phone: '010-4178-1411', bank: '농협', account: '966-02-024872' },
   },
   bride: {
     name: '윤누리',
@@ -42,7 +42,7 @@ const AccountCopyRow: React.FC<{ label: string; name: string; bank: string; acco
     } catch { /* fallback */ }
   };
   return (
-    <div className="flex items-center justify-between py-3 border-b border-stone-100 last:border-b-0">
+    <div className="flex items-center justify-between py-2.5 border-b border-stone-100 last:border-b-0">
       <div className="text-left">
         <div>
           <span className="text-xs text-stone-400 mr-1.5">{label}</span>
@@ -64,16 +64,16 @@ const AccountSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
   const isMobile = useIsMobile();
 
   const content = (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* 신랑 측 */}
       <div>
-        <span className="text-xs text-gold tracking-wider block text-center mb-2">신랑 측</span>
+        <span className="text-xs text-gold tracking-wider block text-center mb-1">신랑 측</span>
         <AccountCopyRow label="신랑" name={contactData.groom.name} bank={contactData.groom.bank} account={contactData.groom.account} />
         <AccountCopyRow label="어머니" name={contactData.groom.mother.name} bank={contactData.groom.mother.bank!} account={contactData.groom.mother.account!} />
       </div>
       {/* 신부 측 */}
       <div>
-        <span className="text-xs text-gold tracking-wider block text-center mb-2">신부 측</span>
+        <span className="text-xs text-gold tracking-wider block text-center mb-1">신부 측</span>
         <AccountCopyRow label="신부" name={contactData.bride.name} bank={contactData.bride.bank} account={contactData.bride.account} />
         <AccountCopyRow label="아버지" name={contactData.bride.father.name} bank={contactData.bride.father.bank!} account={contactData.bride.father.account!} />
         <AccountCopyRow label="어머니" name={contactData.bride.mother.name} bank={contactData.bride.mother.bank!} account={contactData.bride.mother.account!} />
@@ -97,23 +97,23 @@ const AccountSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
           {isMobile ? (
             /* 모바일: 바텀시트 */
             <motion.div
-              className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl max-h-[85vh] overflow-y-auto"
+              className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl flex flex-col"
+              style={{ height: '60vh' }}
               initial={{ y: '100%' }}
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             >
-              {/* 드래그 핸들 */}
-              <div className="flex justify-center pt-3 pb-1">
+              <div className="flex justify-center pt-3 pb-1 shrink-0">
                 <div className="w-10 h-1 rounded-full bg-stone-300" />
               </div>
-              <div className="px-6 pb-8 pt-2">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg serif-kr font-light text-[#2a2a2a]">마음 전하기</h3>
-                  <button onClick={onClose} className="p-1 text-stone-400 hover:text-stone-600">
-                    <X size={20} />
-                  </button>
-                </div>
+              <div className="flex items-center justify-between px-6 pt-1 pb-3 shrink-0">
+                <h3 className="text-lg serif-kr font-light text-[#2a2a2a]">마음 전하기</h3>
+                <button onClick={onClose} className="p-1 text-stone-400 hover:text-stone-600">
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="px-6 pb-6 overflow-y-auto flex-1 min-h-0">
                 {content}
               </div>
             </motion.div>
@@ -155,6 +155,7 @@ const Footer: React.FC = () => {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   return (
+    <>
     <footer className="py-16 md:py-28 lg:py-40 px-6 bg-ivory text-center">
       <div className="max-w-3xl mx-auto space-y-12 md:space-y-20">
         {/* 감사 메시지 */}
@@ -273,8 +274,6 @@ const Footer: React.FC = () => {
           </button>
         </div>
 
-        <AccountSheet isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />
-
         {/* 저작권 */}
         <div className="mt-16 md:mt-24">
           <p className="text-xs text-stone-200 font-bold tracking-[0.8em] uppercase serif-kr">
@@ -283,6 +282,8 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
+    <AccountSheet isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />
+    </>
   );
 };
 
