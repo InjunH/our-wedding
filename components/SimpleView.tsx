@@ -87,7 +87,15 @@ const SimpleView: React.FC<{ onSwitchToFull: () => void }> = ({ onSwitchToFull }
   return (
     <div className="min-h-screen bg-white text-[#2a2a2a]" style={{ fontSize: '20px' }}>
       {/* Hero — 일반 보기와 동일 */}
-      <Hero onSwitchToSimple={onSwitchToFull} switchLabel="일반 보기" />
+      {/* 일반 보기 플로팅 버튼 */}
+      <button
+        onClick={onSwitchToFull}
+        className="fixed top-6 right-6 z-50 px-4 py-2 rounded-full bg-black/30 backdrop-blur-sm text-white/80 text-sm hover:bg-black/50 transition-colors"
+      >
+        일반 보기
+      </button>
+
+      <Hero />
 
       {/* 일시 & 장소 */}
       <section className="px-6 py-10 border-b border-stone-100">

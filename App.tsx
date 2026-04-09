@@ -107,7 +107,7 @@ const App: React.FC = () => {
       />
 
       <main className="w-full">
-        <Hero onSwitchToSimple={() => handleSelectMode('simple')} />
+        <Hero />
         <CoreTruth />
         <PhotoDivider src="/studio/KSJ02613-1_divider.webp" alt="Studio portrait" />
         <StudioGallery />
@@ -158,6 +158,13 @@ const App: React.FC = () => {
           </ShimmerButton>
         </motion.div>
       </motion.div>
+      {/* 크게 보기 플로팅 버튼 */}
+      <button
+        onClick={() => handleSelectMode('simple')}
+        className="fixed top-6 right-6 z-50 px-4 py-2 rounded-full bg-black/30 backdrop-blur-sm text-white/80 text-sm hover:bg-black/50 transition-colors"
+      >
+        크게 보기
+      </button>
     </div>
     </>
   );
