@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 모바일 이미지 터치 방지 */
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 @layer components {
   .input-wedding {
     @apply w-full px-4 py-3.5 bg-white border border-[#f2f0ea] rounded-sm
