@@ -264,14 +264,15 @@ const Footer: React.FC = () => {
         </div>
 
         {/* 마음 전하기 버튼 */}
-        <div>
+        <div className="space-y-3">
           <button
             onClick={() => setIsAccountOpen(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gold/30 text-sm text-gold hover:bg-gold/5 transition-colors"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gold text-white text-base hover:bg-[#a88a47] transition-colors shadow-md"
           >
-            <Heart size={14} />
-            <span className="tracking-widest">마음 전하기</span>
+            <Heart size={18} />
+            <span className="tracking-widest font-medium">마음 전하기</span>
           </button>
+          <p className="text-xs text-stone-400">축의금 계좌번호 확인</p>
         </div>
 
         {/* 저작권 */}

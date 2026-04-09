@@ -107,6 +107,54 @@ const MapSection: React.FC = () => {
             />
           </motion.div>
         </div>
+
+        {/* 교통 안내 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 md:mt-16 border border-[#f2f0ea] bg-white p-6 md:p-10"
+        >
+          <h4 className="text-sm font-bold text-gold tracking-[0.3em] uppercase mb-6 text-center">교통 안내</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 text-left">
+            <div className="space-y-5">
+              <div>
+                <p className="text-sm font-medium text-[#2a2a2a] mb-2">지하철</p>
+                <p className="text-sm text-stone-500 leading-relaxed">
+                  2호선 낙성대역 4번 출구 →<br />
+                  GS주유소 → [장블랑제리]제과점 앞<br />
+                  마을버스 <span className="text-[#2a2a2a] font-medium">관악-02번</span> 승차 →<br />
+                  호암교수회관 하차 (5분거리)
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-[#2a2a2a] mb-2">버스</p>
+                <p className="text-sm text-stone-500 leading-relaxed">
+                  461, 641, 643, 5413, 5424,<br />
+                  5520, 5524, 5528 이용 낙성대 하차 →<br />
+                  마을버스 <span className="text-[#2a2a2a] font-medium">관악-02번</span> 환승 (5분거리)
+                </p>
+              </div>
+            </div>
+            <div className="space-y-5">
+              <div>
+                <p className="text-sm font-medium text-[#2a2a2a] mb-2">승용차</p>
+                <p className="text-sm text-stone-500 leading-relaxed">
+                  남부순환도로에서 낙성대<br />
+                  (이정표: 서울대후문) 방면 좌·우회전<br />
+                  1.5km 직진 후 좌측 위치<br />
+                  <span className="text-[#2a2a2a] font-medium">주차 무료 (200대)</span>
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-[#2a2a2a] mb-2">내비게이션</p>
+                <p className="text-sm text-stone-500 leading-relaxed">
+                  서울시 관악구 관악로 1
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

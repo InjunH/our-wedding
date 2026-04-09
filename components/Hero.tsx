@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { WEDDING_DATA } from '../constants';
 
-const Hero: React.FC = () => {
+const Hero: React.FC<{ onSwitchToSimple?: () => void; switchLabel?: string }> = ({ onSwitchToSimple, switchLabel = '크게 보기' }) => {
   const dateStr = WEDDING_DATA.weddingDate.toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: 'long',
@@ -29,6 +29,16 @@ const Hero: React.FC = () => {
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+
+      {/* 크게 보기 버튼 */}
+      {onSwitchToSimple && (
+        <button
+          onClick={onSwitchToSimple}
+          className="absolute top-6 right-6 z-20 px-4 py-2 rounded-full bg-black/30 backdrop-blur-sm text-white/80 text-sm hover:bg-black/50 transition-colors"
+        >
+          {switchLabel}
+        </button>
+      )}
 
       {/* Content */}
       <div className="absolute inset-0 flex flex-col justify-end items-center pb-28 px-6 z-10">

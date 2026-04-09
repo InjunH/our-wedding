@@ -1,6 +1,6 @@
 
 import React, { Suspense, useState, useEffect } from 'react';
-import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useSpring, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import Hero from './components/Hero';
 import CoreTruth from './components/CoreTruth';
@@ -10,12 +10,72 @@ import PhotoGallery from './components/PhotoGallery';
 import BigEvent from './components/BigEvent';
 import MapSection from './components/MapSection';
 import Footer from './components/Footer';
+import SimpleView from './components/SimpleView';
 
 // Lazy load Firebase-dependent components
 const RSVP = React.lazy(() => import('./components/RSVP'));
 const GuestBook = React.lazy(() => import('./components/GuestBook'));
 
+const VIEW_MODE_KEY = 'wedding_view_mode';
+
+const ViewModeModal: React.FC<{ onSelect: (mode: 'full' | 'simple') => void }> = ({ onSelect }) => (
+  <motion.div
+    className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-6"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
+    <motion.div
+      className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl"
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.9, opacity: 0 }}
+    >
+      <div className="p-8 text-center">
+        <p className="text-gold text-xs font-bold tracking-[0.5em] mb-4">누리 & 인준</p>
+        <h2 className="text-2xl serif-kr font-light text-[#2a2a2a] mb-2">청첩장 보기</h2>
+        <p className="text-sm text-stone-400 mb-8">보기 방식을 선택해주세요</p>
+
+        <div className="space-y-3">
+          <button
+            onClick={() => onSelect('full')}
+            className="w-full py-4 px-6 rounded-xl border-2 border-stone-200 hover:border-gold/50 transition-colors text-left"
+          >
+            <p className="text-lg font-medium text-[#2a2a2a]">일반 보기</p>
+            <p className="text-sm text-stone-400 mt-1">사진과 함께 보는 청첩장</p>
+          </button>
+          <button
+            onClick={() => onSelect('simple')}
+            className="w-full py-4 px-6 rounded-xl border-2 border-gold bg-gold/5 hover:bg-gold/10 transition-colors text-left"
+          >
+            <p className="text-lg font-medium text-gold">크게 보기</p>
+            <p className="text-sm text-stone-500 mt-1">큰 글씨로 핵심 정보만 보기</p>
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  </motion.div>
+);
+
 const App: React.FC = () => {
+  const [viewMode, setViewMode] = useState<'full' | 'simple' | null>(null);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(VIEW_MODE_KEY);
+    if (saved === 'full' || saved === 'simple') {
+      setViewMode(saved);
+    } else {
+      setShowModal(true);
+    }
+  }, []);
+
+  const handleSelectMode = (mode: 'full' | 'simple') => {
+    localStorage.setItem(VIEW_MODE_KEY, mode);
+    setViewMode(mode);
+    setShowModal(false);
+  };
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -30,7 +90,15 @@ const App: React.FC = () => {
     setShowCTA(latest > 0.1 && latest < 0.85);
   });
 
+  if (viewMode === 'simple') {
+    return <SimpleView onSwitchToFull={() => handleSelectMode('full')} />;
+  }
+
   return (
+    <>
+    <AnimatePresence>
+      {showModal && <ViewModeModal onSelect={handleSelectMode} />}
+    </AnimatePresence>
     <div className="relative bg-[#faf9f6] text-[#333] selection:bg-[#e5d5b7] selection:text-[#333]">
       {/* Progress Bar */}
       <motion.div
@@ -39,7 +107,7 @@ const App: React.FC = () => {
       />
 
       <main className="w-full">
-        <Hero />
+        <Hero onSwitchToSimple={() => handleSelectMode('simple')} />
         <CoreTruth />
         <PhotoDivider src="/studio/KSJ02613-1_divider.webp" alt="Studio portrait" />
         <StudioGallery />
@@ -91,6 +159,7 @@ const App: React.FC = () => {
         </motion.div>
       </motion.div>
     </div>
+    </>
   );
 };
 
