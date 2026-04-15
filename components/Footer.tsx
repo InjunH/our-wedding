@@ -87,7 +87,7 @@ const AccountSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
         <>
           {/* 배경 오버레이 */}
           <motion.div
-            className="fixed inset-0 bg-black/40 z-50"
+            className="fixed inset-0 bg-black/40 z-[60]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -97,7 +97,7 @@ const AccountSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
           {isMobile ? (
             /* 모바일: 바텀시트 */
             <motion.div
-              className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl flex flex-col"
+              className="fixed inset-x-0 bottom-0 z-[60] bg-white rounded-t-2xl flex flex-col"
               style={{ height: '60vh' }}
               initial={{ y: '100%' }}
               animate={{ y: 0 }}
@@ -120,7 +120,7 @@ const AccountSheet: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
           ) : (
             /* PC: 센터 모달 */
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 z-[60] flex items-center justify-center p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
