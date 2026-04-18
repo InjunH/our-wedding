@@ -61,10 +61,14 @@ export const useGuestBook = () => {
     setError(null);
 
     try {
-      await addDoc(collection(db, 'guestbook'), {
+      const payload: Record<string, unknown> = {
         ...entry,
         createdAt: serverTimestamp(),
-      });
+      };
+      Object.keys(payload).forEach(
+        (k) => payload[k] === undefined && delete payload[k]
+      );
+      await addDoc(collection(db, 'guestbook'), payload);
     } catch (err) {
       console.error('방명록 작성 오류:', err);
       setError('메시지 작성 중 오류가 발생했습니다. 다시 시도해주세요.');
